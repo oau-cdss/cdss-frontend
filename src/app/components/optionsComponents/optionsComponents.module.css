@@ -1,0 +1,38 @@
+.optionContainer {
+    text-align: center;
+    width: 365px;
+   padding: 15px 10px;
+   margin-top: 70px;
+    background-color: #fff;
+}
+
+.optionTopic {
+    color: #1E59CF;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.optionDetails {
+    width: 335px;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 28.64px;
+    color: #B3B3B3;
+}
+
+.optionImg {
+    display: flex;
+    justify-content: center;
+   
+}
+
+
+
+.imgContainer {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+} 

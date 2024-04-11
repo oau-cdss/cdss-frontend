@@ -1,0 +1,42 @@
+.optionContainer {
+    text-align: center;
+    width: 365px; 
+   padding: 30px 45px;
+    margin: 70px 0px 0px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.optionTopic {
+    color: #03021B;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.optionDetails {
+
+    
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 21.48px;
+    color: #B3B3B3;
+    /*sf pro display*/
+}
+
+.optionImg {
+    display: flex;
+    justify-content: center;
+   
+}
+
+
+
+.imgContainer {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+} 

@@ -1,0 +1,59 @@
+.container {
+    background-color: #fff;
+    width: 100vw;
+    
+    padding: 70px  70px 15px;
+}
+
+.firstContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+     
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    /*SF display*/
+}
+
+.listContainer p {
+    font-size: 20px;
+    font-weight: 600;
+    color: #b3b3b3;
+}
+
+.listContainer p:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.socials {
+    display: flex;
+    justify-content: space-between;
+    width: 240px;
+}
+
+.rule {
+    width: 100vw;
+    margin: 70px auto 20px;
+}
+
+.secondContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #b3b3b3;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.innerContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.innerContainer p:first-child {
+    margin-right: 20px;
+}
