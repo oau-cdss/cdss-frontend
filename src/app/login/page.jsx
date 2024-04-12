@@ -26,8 +26,21 @@ const Login = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
+                const userRole = localStorage.getItem('userRole');
                 // Handle successful login, e.g., redirect to dashboard
-                window.location.href = "/";
+                if (userRole === 'PATIENT') {
+                    // Redirect to patient dashboard
+                    window.location.href = '/patient-dashboard';
+                } else if (userRole === 'ADMIN') {
+                    // Redirect to admin dashboard
+                    window.location.href = '/admin-dashboard';
+                } else if (userRole === 'CLINICIAN') {
+                    // Redirect to clinician dashboard
+                    window.location.href = '/clinical-dashboard';
+                } else {
+                    // Handle other cases or provide a default redirection
+                    window.location.href = '/';
+                }
             } else {
                 const errorMessage = await response.text();
                 setMessage(errorMessage);

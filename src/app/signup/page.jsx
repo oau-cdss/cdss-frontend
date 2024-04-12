@@ -29,6 +29,8 @@ const SignUp = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
+                localStorage.setItem('userRole', role);
+
                 // Handle successful signup, e.g., redirect to dashboard
                 window.location.href = "/login";
             } else {
