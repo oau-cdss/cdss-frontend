@@ -14,18 +14,19 @@ const Login = () => {
     const loginSubmit = async (e) => {
         e.preventDefault();
         try {
-            const token = "YOUR_ACCESS_TOKEN"; // Replace this with your actual access token
+            
             const response = await fetch('https://cdss-api.fly.dev/v1/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token,
+                    
                 },
                 body: JSON.stringify({ email, password }),
             });
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
+                localStorage.setItem('authToken', data.payload.token)
                 const userRole = localStorage.getItem('userRole');
                 // Handle successful login, e.g., redirect to dashboard
                 if (userRole === 'PATIENT') {
