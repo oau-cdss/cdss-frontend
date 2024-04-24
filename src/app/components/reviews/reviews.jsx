@@ -1,5 +1,9 @@
 import ReviewsComponents from "../reviewsComponents/reviewsComponents";
 import styles from "./reviews.module.css"
+import CustomerReview from "./customerReview"
+import reviews from "../../../database/reviews.json"
+import CustomerreviewCarousel from "./customersReviewCarousel";
+
 
 const Reviews = () => {
     return (
@@ -35,6 +39,22 @@ const Reviews = () => {
                 <p className={styles.slideTopic}>
                   WHAT CLIENTS SAY ABOUT CDSS
                 </p>
+
+                <div>
+                    <CustomerreviewCarousel data={reviews} loop>
+
+                    {reviews.map((rev, i) => {
+                        return (
+                            <div className="relative h-64 flex-[0_0_100%]" key={i}>
+    <CustomerReview
+      key={i}
+      content={rev.CustomersReview}
+      name={rev.customersName}
+    />
+    </div>)
+})}
+  </CustomerreviewCarousel>
+                </div>
             </div>
         </div>
     )
