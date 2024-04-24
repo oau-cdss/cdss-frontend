@@ -4,12 +4,16 @@ import Sidebar from './component/sidebar'
 import Main from './component/main'
 
 function Patient() {
+  
+
+
+
   return (
-<div class="flex h-full w-screen">
+<div className="flex h-full w-screen">
   
   <Sidebar />
   
-  <div class="flex flex-col w-4/5">
+  <div className="flex flex-col w-4/5 h-full">
     
     <Header />
     <Main/>
