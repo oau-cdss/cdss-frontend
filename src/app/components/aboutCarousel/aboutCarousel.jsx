@@ -15,7 +15,7 @@ const AboutCarousel = () => {
            </p>
 
            <div>
-               <CarouselHome/>
+               <CarouselHome />
            </div>
             </div>
         </div>
