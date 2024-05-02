@@ -30,8 +30,12 @@ const SignUp = () => {
                 const data = await response.json();
                 console.log(data);
                 
-                localStorage.setItem('userRole', role);
-                localStorage.setItem('fullName', fullName);
+                if (typeof window !== 'undefined') {
+                    // Code accessing localStorage
+                    localStorage.setItem('userRole', role);
+                    localStorage.setItem('fullName', fullName);
+                  }
+                  
                 
 
                 // Handle successful signup, e.g., redirect to dashboard
