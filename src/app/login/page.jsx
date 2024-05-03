@@ -14,7 +14,6 @@ const Login = () => {
     const loginSubmit = async (e) => {
         e.preventDefault();
         try {
-            const token = data.payload.user.token
             const response = await fetch('https://cdss-api.fly.dev/v1/auth/login', {
                 method: 'POST',
                 headers: {
@@ -25,7 +24,9 @@ const Login = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+                console.log(data, "myname");
+                const token = data.payload.user.token
+                console.log(token)
                 const userRole = data.payload.user.role
                 // Handle successful login, e.g., redirect to dashboard
                 if (userRole === 'PATIENT') {
@@ -36,7 +37,7 @@ const Login = () => {
                     window.location.href = '/admin-dashboard';
                 } else if (userRole === 'CLINICIAN') {
                     // Redirect to clinician dashboard
-                    window.location.href = '/clinical-dashboard';
+                    window.location.href = '/clinician-dashboard';
                 } else {
                     // Handle other cases or provide a default redirection
                     window.location.href = '/';
@@ -47,8 +48,8 @@ const Login = () => {
             }
         } catch (error) {
             console.error('Error', error);
-            alert(error);
-            // window.location.href = "/forgotpassword"; // Uncomment if you want to redirect to forgot password
+            alert(error+'ggddh');
+            //
         }
     };
 
