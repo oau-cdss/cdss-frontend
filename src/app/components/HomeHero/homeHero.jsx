@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const HomeHero = () => {
     return (
-        <div className="grid grid-cols-2 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 pb-16">
             <div className={styles.boxOne}>
                 <p className={styles.text}>
                 Revolutionize Movement:<br/>Your Path to Musculoskeletal Wellness Begins!

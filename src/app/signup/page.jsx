@@ -26,7 +26,7 @@ const SignUp = () => {
                 },
                 body: JSON.stringify({ email, fullName, role, password }),
             });
-            if (response.ok) {
+            if (response.status === 200) {
                 const data = await response.json();
                 console.log(data);
                 
