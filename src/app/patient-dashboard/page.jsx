@@ -7,6 +7,7 @@ import Main from './component/main'
 import axios from 'axios'
 
 function Patient() {
+  
 
   useEffect(() => {
     fetchQuestions();

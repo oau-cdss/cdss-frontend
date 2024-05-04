@@ -1,35 +1,47 @@
-"use client"
 
-// components/Carousel.tsx
-// import the hook and options type
-import React, { useState, useEffect } from "react";
-import CarouselControls from "./CarouselControl";
-import { useCarousel } from "@/app/context/carouselContext";
+import useEmblaCarousel from "embla-carousel-react";
+import React, {  useEffect, useState } from "react";
+import CarouselControl from "./CarouselControl";
 
 
+const Carousel = ({ children, data, ...options}) => {
+    const [emblaRef, emblaApi] = useEmblaCarousel(options);
+    const canScrollPrev = !!emblaApi?.canScrollPrev();
+    const canScrollNext = !!emblaApi?.canScrollNext();
+    const length = React.Children.count(data)
+    
+    // We need to track the selectedIndex to allow this component to re-render in react.
+    // Since emblaRef is a ref, it won't re-render even if there are internal changes to its state.
+    const [selectedIndex, setSelectedIndex] = useState(0);
+  
+    useEffect(() => {
+      function selectHandler() {
+        // selectedScrollSnap gives us the current selected index.
+        const index = emblaApi?.selectedScrollSnap();
+        setSelectedIndex(index || 0);
+      }
+  
+      emblaApi?.on("select", selectHandler);
+      // cleanup
+      return () => {
+        emblaApi?.off("select", selectHandler);
+      };
+    }, [emblaApi])
 
-const Carousel = ({ children }) => {
- const {emblaRef} = useCarousel()
 
-
- 
   return (
     <>
-    {/*// Attach ref to a div
-    // 2. The wrapper div must have overflow:hidden*/}
-    <div className="overflow-hidden" ref={emblaRef}>
-      {/* 3. The inner div must have a display:flex property */}
-      {/* 4. We pass the children as-is so that the outside component can style it accordingly */}
-      <div className="flex">{children}</div>
-    </div>
-
-
-         {/* <CarouselControls
-             canScrollNext={canScrollNext}
-             canScrollPrev={canScrollPrev}
-             onPrev={() => emblaApi?.scrollPrev()}
-             onNext={() => emblaApi?.scrollNext()} /> */}
-            <CarouselControls/> 
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex">{children}</div>
+      </div>
+     
+      <CarouselControl
+        canScrollNext={canScrollNext}
+        canScrollPrev={canScrollPrev}
+        onNext={() => emblaApi?.scrollNext()}
+        onPrev={() => emblaApi?.scrollPrev()}
+        itemsLength={length} selectedIndex={selectedIndex}
+      />
     </>
   );
 };
