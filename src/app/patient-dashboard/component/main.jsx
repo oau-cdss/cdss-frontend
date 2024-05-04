@@ -54,7 +54,7 @@ function Main() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   const fetchData = async () => {
     try {
@@ -84,7 +84,7 @@ function Main() {
 
   useEffect(() => {
     fetchSessions();
-  }, []);
+  });
 
   const fetchSessions = async () => {
     try {
