@@ -21,6 +21,12 @@
     font-weight: 600;
     line-height: 53.68px;
     width: 597px;
+
+    @media screen and (max-width: 1024px) {
+        width: 100vw;
+        font-size: 24px;
+        line-height: 35px;
+    }
     
 }
 
@@ -31,6 +37,11 @@
     line-height: 28.64px;
     color: #b3b3b3;
     margin-top: 30px;
+
+    @media screen and (max-width: 1024px) {
+        width: 100vw;
+        line-height: 24px;
+    }
 }
 
 .reviewContainer {
@@ -38,6 +49,10 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 35px;
      justify-content: center;
+     @media screen and (max-width: 1024px) {
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: repeat(1, 1fr);
+     }
     }
     
 .slideContainer {

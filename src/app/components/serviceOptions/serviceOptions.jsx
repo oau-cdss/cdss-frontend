@@ -15,7 +15,7 @@ const ServiceOptions = () => {
                 </p>
             </div>
 
-            <div className={styles.boxContainer}>
+            <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-3 gap-x-1">
                  <OptionsComponents 
                    optionImg="/mobile-app.png"
                    optionTopic="Medical Sessions"

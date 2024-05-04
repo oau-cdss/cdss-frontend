@@ -24,7 +24,7 @@ const CarouselControls = (props) => {
       >
         &larr;
       </button>
-       <Dots itemsLength={props.itemsLength} selectedIndex={props.selectedIndex} gap="gap-x-2" width="w-28"/>
+       <Dots itemsLength={props.itemsLength} selectedIndex={props.selectedIndex} gap="gap-x-2" width="w-40" minWidth="w-12"/>
       <button
         onClick={() => {
           if (props.canScrollNext) {

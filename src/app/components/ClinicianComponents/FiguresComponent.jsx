@@ -2,7 +2,7 @@ import FigureDiv from './figuresDiv'
 
 const FiguresComponent = () => {
     return (
-        <div className='bg-[#e2dfdf] flex p-5 rounded-lg'>
+        <div className="bg-gray-100 grid grid-cols-3 gap-x-2 p-5 rounded-lg">
             <FigureDiv img="/noun-person.png" alt="person" title="Person"/>
             <FigureDiv img="/noun-report.png" alt="Diagnosis" title="Diagnosis"/>
             <FigureDiv img="/noun-therapy-appointment.png" alt="Session" title="Session"/>
