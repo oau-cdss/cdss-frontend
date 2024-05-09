@@ -3,12 +3,22 @@
     width: 100vw;
     
     padding: 70px  70px 15px;
+
+    @media screen and (max-width: 1024px) {
+        padding: 70px 14px 15px;
+    }
 }
 
 .firstContainer {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     justify-content: center;
+
+    @media screen and (max-width: 1024px) {
+        grid-template-columns: repeat(2, 1fr);   
+        row-gap: 35px;
+        justify-content: space-between;
+    }
      
 }
 
@@ -33,11 +43,26 @@
     display: flex;
     justify-content: space-between;
     width: 240px;
+
+    @media screen and (max-width:  1024px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        row-gap: 8px;
+        width: auto;
+
+    }
 }
 
 .rule {
     width: 100vw;
     margin: 70px auto 20px;
+
+    @media screen and (max-width: 1024px) {
+        margin: 70px auto 20px;
+        width: 90vw;
+        text-align: center;
+    }
 }
 
 .secondContainer {
@@ -47,11 +72,19 @@
     color: #b3b3b3;
     font-size: 18px;
     font-weight: 600;
+
+    @media screen and (max-width: 1024px) {
+        flex-direction: column;
+    }
 }
 
 .innerContainer {
     display: flex;
     justify-content: space-between;
+
+    @media screen and (max-width: 1024px) {
+        margin-top: 5px;
+    }
 }
 
 .innerContainer p:first-child {

@@ -6,11 +6,11 @@ const HomeHero = () => {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 pb-16">
             <div className={styles.boxOne}>
-                <p className={styles.text}>
+                <p className={`${styles.text} invisible lg:block`}>
                 Revolutionize Movement:<br/>Your Path to Musculoskeletal Wellness Begins!
                 </p>
 
-                <div className={styles.miniBox}>
+                <div className={`${styles.miniBox} hidden lg:block`}>
                     <div>
                     <Image src="/search.png" alt="arrow-down" width={20} height={20} />
                         
@@ -29,6 +29,9 @@ const HomeHero = () => {
 
             </div>
             <div className={styles.boxTwo}>
+                  <p className={`${styles.text} block lg:hidden mb-10`}>
+                Revolutionize Movement:<br/>Your Path to Musculoskeletal Wellness Begins!
+                </p>
                 <div className={styles.img}>
                 <Image 
                   src="/sideview1.png" 

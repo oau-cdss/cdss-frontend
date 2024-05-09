@@ -3,6 +3,7 @@ import styles from "./ClinicianComponents.module.css"
 import { HiMiniUser } from "react-icons/hi2";
 import { FaCalendar } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
+import Link from "next/link";
 
 const ClinicianSideBar = () => {
     return (
@@ -13,12 +14,16 @@ const ClinicianSideBar = () => {
             </div>
 
             <div className={styles.menuBar}>
+                <Link href="/clinician-dashboard">
                 <div className={styles.menuIcon}>
                 <div className="text-gray-400 mb-3">
                     <MdDashboard size={30}/>
                 </div>
                 <p className={styles.iconTitle}>Dashboard</p>
                 </div>
+                </Link>  
+
+                <Link href="/clinician-session">
 
                 <div className={styles.menuIcon}>
                <div className="text-gray-400 mb-3">
@@ -26,6 +31,7 @@ const ClinicianSideBar = () => {
                </div>
                 <p className={styles.iconTitle}>Sessions</p>
                 </div>
+                </Link>
 
                 <div className={styles.menuIcon}>
                     <div className="text-gray-400 mb-3">

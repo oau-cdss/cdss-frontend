@@ -4,12 +4,12 @@ import styles from "./login.module.css";
 import { useState } from "react";
 import Link from "next/link";
 
+
 const Login = () => {
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-
-    
 
     const loginSubmit = async (e) => {
         e.preventDefault();
@@ -18,17 +18,19 @@ const Login = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    
                 },
                 body: JSON.stringify({ email, password }),
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log(data, "myname");
-                const token = data.payload.user.token
-                console.log(token)
+                const token = data.payload.token
                 const userRole = data.payload.user.role
-                // Handle successful login, e.g., redirect to dashboard
+                const name = data.payload.user.fullName
+            
+               
+                localStorage.setItem('username', `${name}`);
+
+                // Handle successful login
                 if (userRole === 'PATIENT') {
                     // Redirect to patient dashboard
                     window.location.href = '/patient-dashboard';
@@ -39,21 +41,23 @@ const Login = () => {
                     // Redirect to clinician dashboard
                     window.location.href = '/clinician-dashboard';
                 } else {
-                    // Handle other cases or provide a default redirection
-                    window.location.href = '/';
-                }
-            } else {
-                const errorMessage = await response.text();
-                setMessage(errorMessage);
-            }
-        } catch (error) {
-            console.error('Error', error);
-            alert(error+'ggddh');
-            //
-        }
-    };
 
+                           // Handle other cases or provide a default redirection
+                    window.location.href = '/';
+                        }
+             } else {
+                        const errorMessage = await response.text();
+                        setMessage(errorMessage);
+                    }
+                } catch (error) {
+                    console.error('Error', error);
+                    alert(error);
+                }
+            };
+    
     return (
+        // <RegistrationProvider>
+
         <div className={styles.loginContainer}>
             <div className={styles.imgContainer}>
                 <p className={styles.properDiagnosis}>
@@ -97,7 +101,7 @@ const Login = () => {
                                 className={styles.inputBox}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                            />
+                                />
                         </label>
 
                         <div className={styles.passwordContainer}>
@@ -105,12 +109,12 @@ const Login = () => {
                                 <input 
                                     type="checkbox"
                                     className={styles.checkboxInput}
-                                />                              
+                                    />                              
                                 Remember for 30 days                      
                             </label>
 
                             <div className={styles.forgetPassword}>
-                                <Link href="/">Forgot Password?</Link>
+                                <Link href="/forgotpassword">Forgot Password?</Link>
                             </div>
                         </div>
 
@@ -118,15 +122,17 @@ const Login = () => {
                     </form>
 
                     <div className={styles.signUpAcc}>
-                        <p>Don&apos;t have an account? </p>
+                        <p>Don&apos;t have an account? 
                         <Link href="/signup">
                             <span className={styles.signUp}>Sign up</span>
                         </Link>
+                        </p>
                     </div>
                 </div>
                 
             </div>
         </div>
+    //   </RegistrationProvider>
     );
 };
 
