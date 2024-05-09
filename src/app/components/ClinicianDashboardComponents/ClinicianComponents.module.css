@@ -67,4 +67,12 @@
      object-fit: cover;
      object-position: top;
      background-repeat: no-repeat;
+     height: auto;
+
+     @media screen and (max-width: 1024px) {
+        object-fit: contain;
+        margin: 0px auto;
+        padding: 4px 16px;
+        
+     }
 }

@@ -10,11 +10,11 @@ const Calendar = () => {
     const month = monthNames[monthIndex]
     return (
         <div className={`${styles.calendarBg} py-2 flex flex-col items-center justify-center` }>
-            <div className=" text-[#ffff]">
+            <div className=" text-[#ffff] flex justify-center items-center flex-col ">
 
-            <p>Today</p>
-            <p>{month}</p>
-            <p>{day}</p>
+            <p className="text-center text-sm font-medium">Today</p>
+            <p className="text-center text-lg font-medium">{month}</p>
+            <p className="text-center text-8xl font-medium mt-0">{day}</p>
             </div>
 
         </div>

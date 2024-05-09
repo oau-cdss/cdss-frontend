@@ -121,8 +121,10 @@ const SignUp = () => {
                     </form>
 
                     <div className={styles.signUpAcc}>
-                        <p>Already have an account? </p>
+                        <p>Already have an account? 
+
                         <Link href="login" className={styles.signUp}> Log in</Link>
+                        </p>
                     </div>
                 </div>
                 <p>{message}</p>
