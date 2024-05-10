@@ -1,6 +1,6 @@
 // components/CarouselControls.tsx
 import classNames from "classnames";
-import Dots from "./Dots";
+import Dots from "./dots";
 
 
 const CarouselControls = (props) => {

@@ -1,6 +1,6 @@
 // components/CarouselControls.tsx
 import classNames from "classnames";
-import Dots from "../carousel/Dots";
+import Dots from "../carousel/dots"
 
 
 
