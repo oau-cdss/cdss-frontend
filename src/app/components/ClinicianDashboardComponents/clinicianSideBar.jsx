@@ -23,15 +23,14 @@ const ClinicianSideBar = () => {
                 </div>
                 </Link>  
 
-                <Link href="/clinician-session">
-
+                
                 <div className={styles.menuIcon}>
                <div className="text-gray-400 mb-3">
                 <FaCalendar size={30} />
                </div>
                 <p className={styles.iconTitle}>Sessions</p>
                 </div>
-                </Link>
+            
 
                 <div className={styles.menuIcon}>
                     <div className="text-gray-400 mb-3">
