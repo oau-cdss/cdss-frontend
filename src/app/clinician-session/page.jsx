@@ -1,3 +1,5 @@
+"use client"
+
 import { SessionProvider } from "../../context/sessionContext";
 import ClinicianNavbar from "../components/ClinicianDashboardComponents/clinicianNavbar";
 import ClinicianSideBar from "../components/ClinicianDashboardComponents/clinicianSideBar";
