@@ -1,10 +1,4 @@
-.container {
-    display: flex;
-    position: relative;
-    max-width: auto;
-    padding-bottom: 20px;
-  
-}
+
 
 .boxOne {
     /* position: relative; */
@@ -15,6 +9,7 @@
 
     @media screen and (max-width: 1024px) {
      margin-left: 0px;
+     display: none;
     }
     
     
@@ -28,14 +23,11 @@
     top: 106px;
     left: 80px; */
       font-family: como;
-    font-size: 40px;
+    
     line-height: 63.8px;
     font-weight: 500;
 
-    @media scren and (max-width: 1024px) {
-        max-width: 100vw;
-        display: block;
-    }
+   
 }
 
 .miniBox {
@@ -52,9 +44,8 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 
     @media screen and (max-width: 1024px) {
-        width: 100vw;
+        width: auto;
         font-size: 18px;
-       
     }
 }
 
@@ -70,7 +61,7 @@
     margin-left: 20px;
 
     @media screen and (max-width: 1024px) {
-     margin-left: 5px;
+     margin-left: 8px;
     }
 }
 
@@ -79,7 +70,12 @@
     display: flex;
     align-items: center;
     margin-right: 40px;
+
+    @media screen and (max-width: 1024px) {
+        margin-right: 0px;
+    }
 }
+
 
 .miniBox div:nth-child(2) p {
     margin-right: 60px;
@@ -97,20 +93,40 @@
     padding: 0 35px;
 
     @media screen and (max-width: 1024px) {
-     padding: 0 5px;
+     padding: 0 3px;
     }
     
 }
 
 
 .boxTwo {
-    position: absolute;
-    right: 0px;
+   
     z-index: 1;
+
+   
 }
 
 .img {
     margin-top: 45px;
     
+    @media screen and (max-width: 1024px) {
+        margin-top: 10px;
+    }
+    
 }
+
+.loginBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: var(--blueColor);
+    color: var(--blueColor);
+    height: 48px;
+    width: 90px;
+    font-weight: 500;
+    font-size: 24px;
+  }
 
