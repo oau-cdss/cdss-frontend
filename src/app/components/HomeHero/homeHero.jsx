@@ -51,7 +51,7 @@ const HomeHero = () => {
                   width={520} 
                   height={57}
                   />
-                   <div className={`${styles.miniBox} absolute bottom-5 block lg:hidden`}>
+                   <div className={`${styles.miniBox} absolute bottom-5 block lg:invisible`}>
                     <div>
                     <Image src="/search.png" alt="arrow-down" width={20} height={20} />
                         
