@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "./login.module.css";
 import { useState } from "react";
 import Link from "next/link";
+import { CgDanger } from "react-icons/cg";
 
 
 const Login = () => {
@@ -46,8 +47,10 @@ const Login = () => {
                     window.location.href = '/';
                         }
              } else {
-                        const errorMessage = await response.text();
-                        setMessage(errorMessage);
+                const errorMessage = await response.text();
+                const beginningSlice = errorMessage.slice(12, -1); 
+                const endSlice = beginningSlice.slice(0, -2)
+                setMessage(endSlice);
                     }
                 } catch (error) {
                     console.error('Error', error);
@@ -83,7 +86,12 @@ const Login = () => {
                     </div>
 
                     <form onSubmit={loginSubmit} className={styles.form}>
-                    <p>{message}</p>
+                        {message &&                         
+                        <div className="flex items-center text-red-600 mb-3">
+                             <CgDanger size={25}/>
+                         <p className="ml-2 text-base">{message}</p>
+                        </div>}
+
                         <label className={styles.labelInput}>Email <br/>
                             <input 
                                 type="text" 
