@@ -22,8 +22,12 @@ const Login = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data, "myname");
-                const token = data.payload.user.token
-                console.log(token)
+                const token = data.payload.token
+                const fullName = data.payload.user.fullName
+                // console.log('token received', token)
+                localStorage.setItem("authToken", token)
+                localStorage.setItem("fullName", fullName)
+                // console.log(token)
                 const userRole = data.payload.user.role
                 // Handle successful login, e.g., redirect to dashboard
                 if (userRole === 'PATIENT') {
