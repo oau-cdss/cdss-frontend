@@ -1,6 +1,6 @@
 // components/CarouselControls.tsx
 import classNames from "classnames";
-import Dots from "../carousel/Dots";
+import Dots from "../carousel/dots"
 
 
 
@@ -29,6 +29,7 @@ const ReviewsCarouselControl = (props) => {
         onClick={() => {
           if (props.canScrollNext) {
             props.onNext();
+            alert("next")
           }
         }}
         disabled={!props.canScrollNext}

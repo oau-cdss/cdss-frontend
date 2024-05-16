@@ -3,8 +3,11 @@ import Image from "next/image";
 import styles from "./login.module.css";
 import { useState } from "react";
 import Link from "next/link";
+import { CgDanger } from "react-icons/cg";
+
 
 const Login = () => {
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
@@ -21,6 +24,7 @@ const Login = () => {
             });
             if (response.ok) {
                 const data = await response.json();
+
                 console.log(data, "myname");
                 const token = data.payload.token
                 const fullName = data.payload.user.fullName
@@ -28,8 +32,10 @@ const Login = () => {
                 localStorage.setItem("authToken", token)
                 localStorage.setItem("fullName", fullName)
                 // console.log(token)
-                const userRole = data.payload.user.role
-                // Handle successful login, e.g., redirect to dashboard
+
+               
+
+                // Handle successful login
                 if (userRole === 'PATIENT') {
                     // Redirect to patient dashboard
                     window.location.href = '/patient-dashboard';
@@ -40,21 +46,25 @@ const Login = () => {
                     // Redirect to clinician dashboard
                     window.location.href = '/clinician-dashboard';
                 } else {
-                    // Handle other cases or provide a default redirection
-                    window.location.href = '/';
-                }
-            } else {
-                const errorMessage = await response.text();
-                setMessage(errorMessage);
-            }
-        } catch (error) {
-            console.error('Error', error);
-            alert(error+'ggddh');
-            //
-        }
-    };
 
+                           // Handle other cases or provide a default redirection
+                    window.location.href = '/';
+                        }
+             } else {
+                const errorMessage = await response.text();
+                const beginningSlice = errorMessage.slice(12, -1); 
+                const endSlice = beginningSlice.slice(0, -2)
+                setMessage(endSlice);
+                    }
+                } catch (error) {
+                    console.error('Error', error);
+                    alert(error);
+                }
+            };
+    
     return (
+        // <RegistrationProvider>
+
         <div className={styles.loginContainer}>
             <div className={styles.imgContainer}>
                 <p className={styles.properDiagnosis}>
@@ -80,7 +90,12 @@ const Login = () => {
                     </div>
 
                     <form onSubmit={loginSubmit} className={styles.form}>
-                    <p>{message}</p>
+                        {message &&                         
+                        <div className="flex items-center text-red-600 mb-3">
+                             <CgDanger size={25}/>
+                         <p className="ml-2 text-base">{message}</p>
+                        </div>}
+
                         <label className={styles.labelInput}>Email <br/>
                             <input 
                                 type="text" 
@@ -98,7 +113,7 @@ const Login = () => {
                                 className={styles.inputBox}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                            />
+                                />
                         </label>
 
                         <div className={styles.passwordContainer}>
@@ -106,12 +121,12 @@ const Login = () => {
                                 <input 
                                     type="checkbox"
                                     className={styles.checkboxInput}
-                                />                              
+                                    />                              
                                 Remember for 30 days                      
                             </label>
 
                             <div className={styles.forgetPassword}>
-                                <Link href="/">Forgot Password?</Link>
+                                <Link href="/forgotpassword">Forgot Password?</Link>
                             </div>
                         </div>
 
@@ -119,15 +134,17 @@ const Login = () => {
                     </form>
 
                     <div className={styles.signUpAcc}>
-                        <p>Don&apos;t have an account? </p>
+                        <p>Don&apos;t have an account? 
                         <Link href="/signup">
                             <span className={styles.signUp}>Sign up</span>
                         </Link>
+                        </p>
                     </div>
                 </div>
                 
             </div>
         </div>
+    //   </RegistrationProvider>
     );
 };
 

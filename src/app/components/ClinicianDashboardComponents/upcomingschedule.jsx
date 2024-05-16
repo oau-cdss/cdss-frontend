@@ -6,13 +6,13 @@ const UpcomingSchedule = () => {
             <p className="mb-4">Upcoming Schedule</p>
 
             <div className="flex">
-                <div classNmae="flex items-start pr-2">
+                <div classNmae="flex items-start mr-5">
 
                 <Image 
                    src="/clinician-img.png" alt="clinician" width={40} height={40}
                    className=""/>
                 </div>
-                <div className=" w-full">
+                <div className=" w-full ml-3">
 
                 <div className="flex justify-between mb-2">
                     <div className="flex flex-col">

@@ -10,7 +10,7 @@ const ScheduleComponent = () => {
                    src="/clinician-img.png" alt="clinician" width={50} height={50}
                    className=""/>
                 </div>
-                <div className="ml-4 w-full">
+                <div className=" w-full ml-3">
 
                 <div className="flex justify-between items-center mb-2">
                     <div className="flex flex-col">

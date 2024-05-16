@@ -20,6 +20,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    @media screen and (max-width: 1024px) {
+        margin-top: 30px;
+    }
 }
 .title {
     width: 965px;
@@ -31,9 +34,10 @@
     /*cormorant gamarond*/
 
     @media screen and (max-width: 1024px) {
-        margin-top: 50px;
-        width: 100vw;
+        
+        width: 85vw;
         font-size: 24px;
         line-height: 35px;
+        text-align: left;
     }
 }

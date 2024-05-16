@@ -42,12 +42,15 @@ const SignUp = () => {
                 window.location.href = "/login";
             } else {
                 const errorMessage = await response.text();
-                setMessage(errorMessage);
+                // alert(errorMessage)
+                const beginningSlice = errorMessage.slice(12, -1); 
+                const endSlice = beginningSlice.slice(0, -2)
+                setMessage(endSlice);
             }
         } catch (error) {
             console.error('Error', error);
             alert(error);
-            window.location.href = "/forgotpassword";
+           
         }
     };
 
@@ -87,7 +90,19 @@ const SignUp = () => {
                             />
                         </label>
 
+                        {/* <label className={styles.labelInput}>Last Name <br/>
+                            <input 
+                                type="text" 
+                                placeholder="Enter your Last name"
+                                className={styles.inputBox}
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                            />
+                        </label> */}
+
+
                         <label className={styles.labelInput}>Email <br/>
+                        <p className="text-red-600 text-sm">{message}</p>
                             <input 
                                 type="text" 
                                 placeholder="Enter your email"
@@ -121,11 +136,13 @@ const SignUp = () => {
                     </form>
 
                     <div className={styles.signUpAcc}>
-                        <p>Already have an account? </p>
+                        <p>Already have an account? 
+
                         <Link href="login" className={styles.signUp}> Log in</Link>
+                        </p>
                     </div>
                 </div>
-                <p>{message}</p>
+              
             </div>
         </div>
     );
