@@ -14,6 +14,8 @@ function Main() {
 
   const openModal = (session) => {
     setSelectedSession(session);
+    // Call fetchQuestions with the session ID when the "Start session" button is clicked
+    fetchQuestions(session.id);
   };
 
   const closeModal = () => {
@@ -54,11 +56,12 @@ function Main() {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("authToken");
+      // console.log(token)
       const response = await axios.get(
         "https://cdss-api.fly.dev/v1/questions/supported-regions",
         {
@@ -69,11 +72,11 @@ function Main() {
       );
 
       if (response.status === 200) {
-        console.log(response.data);
+        // console.log(response.data);
         const { payload } = response.data;
         setResult(payload.regions);
         setLoading(false)
-        console.log(result);
+        // console.log(result);
       } else {
         console.error("Failed to fetch data");
       }
@@ -84,7 +87,7 @@ function Main() {
 
   useEffect(() => {
     fetchSessions();
-  });
+  }, []);
 
   const fetchSessions = async () => {
     try {
@@ -100,9 +103,12 @@ function Main() {
 
       if (response.status === 200) {
         const data = response.data;
-        console.log(data);
+        // console.log(data);
         setSessions(data.payload.sessions);
-        console.log(sessions);
+        data.payload.sessions.forEach(session => {
+          // console.log("Session ID:", session.id);
+          
+        });
       } else {
         console.error("Failed to fetch data");
       }
@@ -110,6 +116,36 @@ function Main() {
       console.error("Error:", error);
     }
   };
+  const fetchQuestions = async(sessionId) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.put(
+        `https://cdss-api.fly.dev/v1/sessions/${sessionId}/start`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const data = response.data;
+        console.log(data);
+        // setSessions(data.payload.sessions);
+        // data.payload.sessions.forEach(session => {
+        //   // console.log("Session ID:", session.id);
+          
+        // });
+      } else {
+        console.error("Failed to fetch data");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+
+ 
 
   return (
     <div className="flex h-full  w-full gap-4  p-8 text-[#03021B4D]">
@@ -156,7 +192,7 @@ function Main() {
                       <p className="font-bold text-sm">{session.type}</p>
                     </div>
                     <div className="flex items-center">
-                      <button
+                    <button
                         onClick={() => openModal(session)}
                         className="px-3 py-2 text-xl bg-[#1E59CF] text-white rounded hover:bg-blue-600"
                       >
