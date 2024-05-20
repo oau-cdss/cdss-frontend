@@ -44,5 +44,6 @@ const Carousel = ({ children, data, ...options}) => {
       />
     </>
   );
+  
 };
 export default Carousel;
