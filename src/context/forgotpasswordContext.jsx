@@ -39,7 +39,7 @@ export const ForgotPasswordProvider = ({children,  ...options}) => {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+               
   
                 // Handle successful signup
                alert("Email sucessfully sent")
@@ -67,7 +67,7 @@ export const ForgotPasswordProvider = ({children,  ...options}) => {
         });
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
+           
     
             // Handle successful signup, e.g., redirect to dashboard
             //window.location.href = "/login";

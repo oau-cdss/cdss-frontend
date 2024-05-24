@@ -8,7 +8,7 @@ const ClinicianNavbar = () => {
 
     useEffect(() => {
         const fullName = localStorage.getItem('username');
-        console.log(fullName); 
+      
         if (fullName) {
             let words = fullName.split(" ")
             setFirstName(words[0]);

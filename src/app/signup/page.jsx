@@ -28,7 +28,7 @@ const SignUp = () => {
             });
             if (response.status === 200) {
                 const data = await response.json();
-                console.log(data);
+    
                 
                 if (typeof window !== 'undefined') {
                     // Code accessing localStorage

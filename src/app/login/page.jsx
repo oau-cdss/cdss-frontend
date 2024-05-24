@@ -22,44 +22,44 @@ const Login = () => {
                 },
                 body: JSON.stringify({ email, password }),
             });
+    
             if (response.ok) {
                 const data = await response.json();
-                const token = data.payload.token
-                const userRole = data.payload.user.role
-                const name = data.payload.user.fullName
-            
-               
-                localStorage.setItem('username', `${name}`);
-
-                // Handle successful login
+                console.log('Response data:', data); // Log the entire response for debugging
+    
+                const { token, user } = data.payload || {}; // Safely destructure payload
+                if (!token || !user) {
+                    throw new Error('Invalid response structure');
+                }
+    
+                const { role: userRole, fullName: name } = user; // Destructure user object
+    
+                localStorage.setItem('username', name);
+                localStorage.setItem('token', token);
+    
+                // Handle successful login based on user role
                 if (userRole === 'PATIENT') {
-                    // Redirect to patient dashboard
                     window.location.href = '/patient-dashboard';
                 } else if (userRole === 'ADMIN') {
-                    // Redirect to admin dashboard
                     window.location.href = '/admin-dashboard';
                 } else if (userRole === 'CLINICIAN') {
-                    // Redirect to clinician dashboard
                     window.location.href = '/clinician-dashboard';
                 } else {
-
-                           // Handle other cases or provide a default redirection
                     window.location.href = '/';
-                        }
-             } else {
-                const errorMessage = await response.text();
-                const beginningSlice = errorMessage.slice(12, -1); 
-                const endSlice = beginningSlice.slice(0, -2)
-                setMessage(endSlice);
-                    }
-                } catch (error) {
-                    console.error('Error', error);
-                    alert(error);
                 }
-            };
+            } else {
+                const errorMessage = await response.text();
+                const parsedMessage = errorMessage.match(/"message":"(.*?)"/);
+                setMessage(parsedMessage ? parsedMessage[1] : "An error occurred. Please try again.");
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setMessage('An unexpected error occurred. Please try again.');
+        }
+    };
     
     return (
-        // <RegistrationProvider>
+    
 
         <div className={styles.loginContainer}>
             <div className={styles.imgContainer}>
