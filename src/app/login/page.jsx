@@ -25,6 +25,7 @@ const Login = () => {
     
             if (response.ok) {
                 const data = await response.json();
+
                 console.log('Response data:', data); // Log the entire response for debugging
     
                 const { token, user } = data.payload || {}; // Safely destructure payload
@@ -38,6 +39,7 @@ const Login = () => {
                 localStorage.setItem('token', token);
     
                 // Handle successful login based on user role
+
                 if (userRole === 'PATIENT') {
                     window.location.href = '/patient-dashboard';
                 } else if (userRole === 'ADMIN') {

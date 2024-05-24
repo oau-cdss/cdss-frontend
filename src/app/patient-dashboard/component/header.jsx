@@ -5,7 +5,7 @@ import Image from "next/image";
 
 function Header() {
   // Retrieve fullName from localStorage
-  const fullName = typeof window !== 'undefined' ? localStorage.getItem('fullName') : '';
+  const fullName = typeof window !== 'undefined' ? localStorage.getItem("fullName") : '';
 
   return (
     <div className="h-1/5 w-full p-10 flex justify-between items-center">
