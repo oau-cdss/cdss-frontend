@@ -1,13 +1,16 @@
+"use client"
 import Image from "next/image";
 import styles from "./ClinicianComponents.module.css"
 import { HiMiniUser } from "react-icons/hi2";
 import { FaCalendar } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import Link from "next/link";
+import { useState } from "react";
 
 const ClinicianSideBar = () => {
+    const [open, setOpen] = useState(false)
     return (
-        <div className={styles.sideBar}>
+        <div className={` h-full w-full hidden lg:flex flex-col px-[15px] items-right shadow-md py-[30px] lg:col-span-1 sticky   z-50 left-0 top-0 `}>
             <div className={styles.logoContainer}>
             <Image src="/logo.png" alt="logo" width={53.99} height={53.99} />
           <p className={styles.logo}>CDSS</p>

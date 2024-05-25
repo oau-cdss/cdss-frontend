@@ -20,6 +20,7 @@ const HomeHero = () => {
 
                     <div>
                         <p>How to start a session</p>
+    
                         <Image src="/arrow-down.png" alt="arrow-down" width={20} height={20} />
                     </div>
 

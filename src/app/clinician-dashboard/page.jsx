@@ -13,14 +13,14 @@ function ClinicianDashboard() {
   return (
     // <RegistrationProvider>
 
-    <div className=''>
-      <div className='fixed top-0 left-0 h-100'>
+    <div className='flex lg:grid grid-cols-6 '>
+      
       <ClinicianSideBar/>
-    </div>
+   
 
-    <div className='lg:ml-56 px-0 mr-0'>
+    <div className='px-7  col-span-5'>
       <ClinicianNavbar/>
-      <div className='flex flex-col-reverse gap-y-6 lg:grid grid-cols-2 lg:grid-rows-1 lg:gap-x-5'>
+      <div className='flex flex-col-reverse gap-y-6 lg:grid grid-cols-2 lg:grid-rows-1 lg:gap-x-7'>
         <div className = 'flex flex-col  gap-y-6'>
           <FiguresComponent/>
           <SessionComponent/>
