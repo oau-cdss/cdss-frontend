@@ -27,11 +27,13 @@ const Login = () => {
                 const data = await response.json();
                 console.log(data)
                 const token = data.payload.token
-                const userRole = data.payload.user.role
-                const name = data.payload.user.fullName
-            
+                const fullName = data.payload.user.fullName
+                // console.log('token received', token)
+                localStorage.setItem("authToken", token)
+                localStorage.setItem("fullName", fullName)
+                // console.log(token)
+
                
-                localStorage.setItem('username', `${name}`);
 
                 // Handle successful login
                 if (userRole === 'PATIENT') {

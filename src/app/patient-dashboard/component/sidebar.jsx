@@ -7,6 +7,13 @@ import Image from "next/image";
 function Sidebar() {
   const router = useRouter();
 
+  const handleLogout = () => {
+    // Clear all items from local storage
+    localStorage.clear();
+    // Redirect to the login page or perform any other action
+    window.location.href = '/login';
+  };
+
   // Define base path
   const basePath = "/patient-dashboard";
 
@@ -64,10 +71,10 @@ function Sidebar() {
         </Link>
       </div>
 
-      <Link href="/login" className="gap-2 items-center justify-center p-2">
+      <button onClick={handleLogout} className="gap-2 items-center justify-center p-2">
         <Image src="/logout.png" alt="logo" width={40} height={40} />
         <p className="text-[#03021B66] font-semibold text-lg">Log out</p>
-      </Link>
+      </button>
     </div>
   );
 }
