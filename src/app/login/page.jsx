@@ -28,6 +28,7 @@ const Login = () => {
                 console.log(data)
                 const token = data.payload.token
                 const fullName = data.payload.user.fullName
+                const userRole = data  = data.payload.user.role
                 // console.log('token received', token)
                 localStorage.setItem("authToken", token)
                 localStorage.setItem("fullName", fullName)
