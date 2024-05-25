@@ -25,17 +25,17 @@ const Login = () => {
     
             if (response.ok) {
                 const data = await response.json();
-                console.log('Response data:', data); // Log the entire response for debugging
-    
-                const { token, user } = data.payload || {}; // Safely destructure payload
+              
+                const { token, user } = data.payload || {}; 
                 if (!token || !user) {
                     throw new Error('Invalid response structure');
                 }
     
-                const { role: userRole, fullName: name } = user; // Destructure user object
+                const { role: userRole, fullName: name } = user; 
     
                 localStorage.setItem('username', name);
                 localStorage.setItem('token', token);
+                localStorage.setItem('userRole', userRole);
     
                 // Handle successful login based on user role
                 if (userRole === 'PATIENT') {
@@ -126,7 +126,9 @@ const Login = () => {
                             </div>
                         </div>
 
-                        <button className={styles.signinBtn}>Sign in</button>
+                        <button
+                           type="submit" 
+                          className={styles.signinBtn}>Sign in</button>
                     </form>
 
                     <div className={styles.signUpAcc}>
