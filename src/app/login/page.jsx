@@ -32,6 +32,7 @@ const Login = () => {
 
                     localStorage.setItem("authToken", token);
                     localStorage.setItem("fullName", fullName);
+                    localStorage.setItem("userRole", userRole);
 
                     // Handle successful login
                     switch (userRole) {
