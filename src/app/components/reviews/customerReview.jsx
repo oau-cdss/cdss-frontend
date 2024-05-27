@@ -4,7 +4,7 @@ const CustomerReview = ({content, name}) => {
           <p className="font-semibold text-lg text-center mb-4"> { /*cormorant garmarond*/}
             {content}
         </p> 
-        <p className="text-center text-xl font-medium">{/*sf display pro*/}
+        <p className="text-center text-xl font-medium mt-4">{/*sf display pro*/}
             {name}
         </p>
 

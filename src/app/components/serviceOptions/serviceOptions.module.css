@@ -4,8 +4,8 @@
     padding: 200px 20px 50px;
     width: 100vw;
 
-    @media scren and (max-width: 1024px) {
-        padding: 0px 6px 15px ;
+    @media screen and (max-width: 1024px) {
+        padding: 40px 6px 15px ;
     }
     
     

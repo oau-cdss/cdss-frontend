@@ -35,12 +35,12 @@ const HomeHero = () => {
        <div className={styles.loginBtn}>
        <Link href="/login">Login</Link>
        </div>
-       <div className="blue-btn ml-3">
+       <div className="blue-btn ml-3 px-3">
        <Link href="/">Start a Session</Link>
        </div>
       </div>
-                  <p className={`${styles.text} text-4xl  block lg:hidden `}>
-                Revolutionize Movement:<br/>Your Path to Musculoskeletal Wellness Begins!
+                  <p className={`${styles.text} text-3xl lg:text-4xl  block lg:hidden `}>
+                Revolutionize&nbsp;Movement:<br/>Your Path to Musculoskeletal Wellness Begins!
                 </p>
                 <div className={styles.img}>
             
@@ -52,7 +52,7 @@ const HomeHero = () => {
                   width={520} 
                   height={57}
                   />
-                   <div className={`${styles.miniBox} absolute bottom-5 block lg:invisible`}>
+                   <div className={`${styles.miniBox} absolute bottom-5 w-full block lg:invisible`}>
                     <div>
                     <Image src="/search.png" alt="arrow-down" width={20} height={20} />
                         

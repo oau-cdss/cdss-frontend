@@ -5,6 +5,8 @@
      
   }
 } 
+
+
 .wrapper {
     display: flex;
     align-items: center;
@@ -23,7 +25,7 @@
 
     @media screen and (max-width: 1024px) {
        width: auto;
-       padding: auto 10px;
+       padding: auto 4px;
     }
     
    
