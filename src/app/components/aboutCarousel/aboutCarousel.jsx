@@ -6,7 +6,7 @@ const AboutCarousel = () => {
     return (
         <div className={styles.container}>
             <div className={ styles.vector}>
-                <Image src="/vector.png" alt="vector" width={120} height={100} />
+                <Image src="public/vector.png" alt="vector" width={120} height={100} />
             </div>
 
             <div className={styles.wrapper}>
