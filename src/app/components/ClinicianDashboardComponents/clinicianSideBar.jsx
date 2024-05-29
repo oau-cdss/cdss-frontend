@@ -26,22 +26,26 @@ const ClinicianSideBar = () => {
                 </div>
                 </Link>  
 
-                
+                <Link href="/sessions">
                 <div className={styles.menuIcon}>
                <div className="text-gray-400 mb-3">
                 <FaCalendar size={30} />
                </div>
                 <p className={styles.iconTitle}>Sessions</p>
                 </div>
+                </Link>
+
             
+            <Link href="/schedule">
 
                 <div className={styles.menuIcon}>
                     <div className="text-gray-400 mb-3">
 
                <HiMiniUser size={30}/>
                     </div>
-                <p className={styles.iconTitle}>Patient</p>
+                <p className={styles.iconTitle}>Schedule</p>
                 </div>
+            </Link>
             </div>
 
             <div className={styles.logoutDiv}>

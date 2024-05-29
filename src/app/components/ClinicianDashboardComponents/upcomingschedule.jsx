@@ -6,7 +6,7 @@ const UpcomingSchedule = () => {
             <p className="mb-4">Upcoming Schedule</p>
 
             <div className="flex">
-                <div classNmae="flex items-start mr-5">
+                <div className="flex items-start mr-5">
 
                 <Image 
                    src="/clinician-img.png" alt="clinician" width={40} height={40}

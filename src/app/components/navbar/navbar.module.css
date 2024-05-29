@@ -16,7 +16,6 @@
     height: 88px;
     background-color: #fff;
     width: 80vw; /* width: 1280px; */
-    background-color: #fff;
     border-radius: 8px;
     border: 1px;
     border-color: #fff;
@@ -25,7 +24,7 @@
 
     @media screen and (max-width: 1024px) {
        width: auto;
-       padding: auto 4px;
+       padding: auto 10px;
     }
     
    

@@ -51,16 +51,15 @@
 }
 
 .calendarBg {
-     background-image: url("/calendar-bg.png");
-     object-fit: cover;
-     object-position: top;
-     background-repeat: no-repeat;
+     background-color: #1e59cf;
+     border-radius: 5px;
      height: auto;
 
      @media screen and (max-width: 1024px) {
         object-fit: contain;
         margin: 0px auto;
         padding: 4px 16px;
+        width: 90vw;
         
      }
 }

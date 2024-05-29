@@ -23,7 +23,7 @@ const Login = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('API response data:', data); // Log the response data
+    
 
                 if (data && data.payload && data.payload.user) {
                     const token = data.payload.token;
@@ -51,7 +51,7 @@ const Login = () => {
                     }
                 } else {
                     setMessage("Invalid response structure from the server.");
-                    console.error('Invalid response structure:', data); // Log the invalid structure
+                    console.error('Invalid response structure:', data)
                 }
             } else {
                 const errorMessage = await response.text();

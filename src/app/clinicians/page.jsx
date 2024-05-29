@@ -92,7 +92,7 @@ const Clinicians = () => {
         <div className="relative">
             <Navbar/>
                 <div className="w-1/4 lg:w-auto absolute hidden lg:block left-0 top-1/3 ">
-                <Image src="/vector.png" alt="vector" width={110} height={80} />
+                <Image src="/Vector.png" alt="vector" width={110} height={80} />
                 </div>
             <div>
                 <div className="flex flex-col  lg:flex-row lg:items-center justify-between lg:px-24 py-6">
