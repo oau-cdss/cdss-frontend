@@ -6,15 +6,13 @@ import Sidebar from '../component/sidebar'
 function Messages() {
   return (
 <div className="flex h-full w-screen">
-  
-  <Sidebar />
-  
-  <div className="flex flex-col w-4/5 ml-[19rem]">
-    
+  <div className="w-[15%]">
+    <Sidebar />
+  </div>
+
+  <div className="flex w-[85%] flex-col h-full px-5">
     <Header />
-    
-    
-    
+   
   </div>
 </div>
   )

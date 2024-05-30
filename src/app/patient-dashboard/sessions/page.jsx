@@ -75,9 +75,15 @@ function Patient() {
 
   return (
     <div className="flex h-full w-screen">
-      <Sidebar />
-      <div className="flex ml-[19rem] flex-col w-4/5 h-full">
-        <Header />
+  <div className="w-[15%]">
+    <Sidebar />
+  </div>
+
+  <div className="flex w-[85%] flex-col h-full px-5">
+    <Header />
+   
+  
+
         <div className="flex w-full gap-4 p-8">
           <div className="w-full border shadow-md bg-[#F9F9F9] p-8 rounded-lg">
             <h3 className="text-xl font-semibold text-[#03021B4D] pb-4">Choose a session</h3>
@@ -102,6 +108,7 @@ function Patient() {
         </div>
         <Modal isOpen={!!selectedSession} onClose={closeModal} />
       </div>
+      
     </div>
   );
 }
