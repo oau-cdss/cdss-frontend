@@ -56,6 +56,7 @@ function Header({ isDropdownOpen }) {
   }, []);
 
   return (
+    //this is the header
     <div className="h-1/5 w-full p-10 flex gap-4 justify-between items-center relative">
       <div className="flex gap-5 lg:hidden xl:hidden items-center">
         <div className="text-[#0D0D0D] font-bold text-2xl flex items-center gap-3">
