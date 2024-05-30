@@ -8,6 +8,12 @@
     @media screen and (max-width: 1024px) {
         margin-top: 0px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        
+    }
+
+    @media screen and (max-width: 480px) {
+        padding: 15px 0px;
+        width: auto;
     }
 }
 
@@ -26,6 +32,9 @@
     text-align: center;
     line-height: 28.64px;
     color: #B3B3B3;
+    @media screen and (max-width: 480px) {
+        width: auto;
+    }
 }
 
 .optionImg {

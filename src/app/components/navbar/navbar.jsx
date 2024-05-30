@@ -15,9 +15,9 @@ const Navbar = () => {
           <p className={styles.logo}>CDSS</p>
                 </div>
       <div className={styles.links}>
-        <Link href="/">Clinicians</Link>
+        <Link href="/clinicians">Clinicians</Link>
         <Link href="/">Session</Link>
-        <Link href="/">Messages</Link>
+       
       </div>
       
       <div className={styles.button}>
