@@ -15,50 +15,21 @@ export const SessionProvider = ({ children }) => {
     const [selectedTime, setSelectedTime] = useState("");
     const [message, setMessage] = useState("");
     const [steps, setSteps] = useState(1);
-    const [supportedRegionList, setSupportedRegionList] = useState([])
-    const [sessionList, setSessionList] = useState([])
+    const [supportedRegionList, setSupportedRegionList] = useState([]);
+    const [sessionList, setSessionList] = useState([]);
+    const [regionId, setRegionId] = useState("");
+    const [patientEmail, setpatientEmail] = useState("");
+    const [successfulSchedule, setSuccessfulSchedule] = useState(false);
 
-    const patientId = "6615912a967614ccf6f995b0";
-    const scheduledTime = `${selectedYear}-${selectedMonth}-${selectedDate}T${selectedTime}`;
-
-    const ScheduleSession = async () => {
-        const token = localStorage.getItem('authToken');
-        const payload = { patientId, type: illnessType, scheduledTime };
-
-        console.log("Payload to be sent:", payload);
-
-        try {
-            const response = await fetch('https://cdss-api.fly.dev/v1/sessions/schedule', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify(payload),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log('API response data:', data);
-
-                if (data && data.payload && data.payload.clinician) {
-                    const type = data.payload.type;
-                    const fullName = data.payload.clinician.fullName;
-                    const scheduledTime = data.payload.scheduledTime;
-                    alert(`Type: ${type}\nClinician: ${fullName}\nScheduled Time: ${scheduledTime}`);
-                } else {
-                    setMessage("Invalid response structure from the server.");
-                    console.error('Invalid response structure:', data);
-                }
-            } else {
-                const errorMessage = await response.text();
-                setMessage(errorMessage.slice(12, -2));
-            }
-        } catch (error) {
-            console.error('Error', error);
-            setMessage('An unexpected error occurred. Please try again.');
-        }
-    };
+    // Ensure that date components are properly formatted
+    const formattedDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(selectedDate).padStart(2, '0')}`;
+    
+    // Ensure that time components are properly formatted
+    const [hour, minute, second] = selectedTime.split(':');
+    const formattedTime = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second || '00').padStart(2, '0')}`;
+    
+    const scheduledFormattedTime = new Date(`${formattedDate}T${formattedTime}`).toLocaleTimeString('en-GB', { hour12: false });
+    const scheduledTime = `${formattedDate}T${scheduledFormattedTime}`
 
     return (
         <SessionContext.Provider value={{
@@ -68,10 +39,14 @@ export const SessionProvider = ({ children }) => {
             selectedMonth, setSelectedMonth,
             selectedYear, setSelectedYear,
             selectedTime, setSelectedTime,
-            message, ScheduleSession,
+            message,
             steps, setSteps,
             supportedRegionList, setSupportedRegionList,
-            sessionList, setSessionList
+            sessionList, setSessionList,
+            regionId, setRegionId,
+            patientEmail, setpatientEmail, 
+            scheduledTime,
+            successfulSchedule, setSuccessfulSchedule
         }}>
             {children}
         </SessionContext.Provider>
@@ -86,3 +61,5 @@ export const useSession = () => {
     }
     return context;
 };
+
+

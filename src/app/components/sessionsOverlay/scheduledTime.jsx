@@ -1,5 +1,7 @@
-import React from 'react';
+"use client"
+import React, {useState} from 'react';
 import { useSession } from '../../../context/sessionContext';
+import { CgDanger } from "react-icons/cg";
 
 const ScheduledTime = () => {
     const {
@@ -7,18 +9,52 @@ const ScheduledTime = () => {
         selectedMonth, setSelectedMonth,
         selectedYear, setSelectedYear,
         selectedTime, setSelectedTime,
-        ScheduleSession, steps, setSteps
+        steps, setSteps,
+        patientEmail, scheduledTime, illnessType, regionId
     } = useSession();
 
     const dates = [...Array(31).keys()].map(i => i + 1);
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const years = Array.from({ length: 2040 - 2023 + 1 }, (_, i) => 2023 + i);
+    const [message, setMessage] = useState("")
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await ScheduleSession();
-        if (steps === 2) {
-            setSteps(3);
+   
+    const ScheduleSession = async () => {
+        const token = localStorage.getItem('authToken');
+        const payload = { patientEmail, type: illnessType, scheduledTime, regionId };
+       
+        try {
+            const response = await fetch(`https://cdss-api.fly.dev/v1/sessions/schedule`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setSuccessfulSchedule(true)
+                setSteps(3)
+                
+                if (data && data.payload && data.payload.clinician) {
+                    const type = data.payload.type;
+                    const fullName = data.payload.clinician.fullName;
+                    const scheduledTime = data.payload.scheduledTime;
+                   
+                   
+                } else {
+                    setMessage("Invalid response structure from the server.");
+                    console.error('Invalid response structure:', data);
+                }
+            } else {
+                const errorMessage = await response.text();
+                setMessage(errorMessage.slice(12, -2));
+            }
+        } catch (error) {
+            console.error('Error', error);
+            setMessage('An unexpected error occurred. Please try again.');
         }
     };
 
@@ -29,7 +65,11 @@ const ScheduledTime = () => {
                 Please provide your available date and time in the text box below
             </p>
             <div className="w-full max-w-md">
-                <form onSubmit={handleSubmit}>
+           {message && <div className="flex items-center text-red-600 mb-3">
+                                <CgDanger size={25} />
+                                <p className="ml-2 text-base">{message}</p>
+                            </div>}
+                <div>
                     <div className="grid grid-cols-3 gap-x-6 mb-4">
                         <div className="flex flex-col gap-y-1">
                             <label htmlFor="date" className="font-medium">Date</label>
@@ -91,13 +131,18 @@ const ScheduledTime = () => {
                         />
                     </div>
 
+                   <div className=" flex justify-center">
+
                     <button 
                         className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
                         type="submit"
-                    >
+                        onClick={
+                            ScheduleSession}
+                            >
                         Start Session
                     </button>
-                </form>
+                        </div>
+                </div>
             </div>
         </div>
     );

@@ -6,7 +6,7 @@ import ClinicianNavbar from "../components/ClinicianDashboardComponents/clinicia
 import ClinicianSessionsList from "../components/ClinicianDashboardComponents/ClinicianSessions/clinicianSessionsList";
 import { useEffect, useState } from "react";
 
-const Sessions = ({ page = 1, id = '', status = '', patientId = '', clinicianId = '' }) => {
+const Sessions = ({ page = 1, id = '', status = '', patientEmail = '', clinicianId = '' }) => {
   const { sessionList, setSessionList } = useSession();
   const [loading, setLoading] = useState(true);
 
@@ -14,8 +14,7 @@ const Sessions = ({ page = 1, id = '', status = '', patientId = '', clinicianId 
     const url = new URL('https://cdss-api.fly.dev/v1/sessions/list');
     const token = localStorage.getItem('authToken');
 
-    // Add query parameters to the URL
-    const params = { page, id, status, patientId, clinicianId };
+    const params = { page, id, status, patientEmail, clinicianId };
     Object.keys(params).forEach(key => {
       if (params[key]) {
         url.searchParams.append(key, params[key]);
@@ -33,6 +32,7 @@ const Sessions = ({ page = 1, id = '', status = '', patientId = '', clinicianId 
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data)
         setSessionList(data.payload.sessions);
       } else {
         const errorData = await response.json();
@@ -49,29 +49,35 @@ const Sessions = ({ page = 1, id = '', status = '', patientId = '', clinicianId 
 
   useEffect(() => {
     listOfSessions();
-  }, [page, id, status, patientId, clinicianId]);  // Re-run the effect if any parameter changes
+  }, [page, id, status, patientEmail, clinicianId]);
 
   return (
     <div className="flex lg:grid grid-cols-6">
       <ClinicianSideBar />
-      <div className="px-2 lg:px-7 col-span-5">
+      <div className="col-span-5">
         <ClinicianNavbar />
+        <div className="px-6  py-6">    
         {loading ? (
-          <div>Loading...</div>
-        ) : (
           <div>
+            
+          </div>
+        ) : (
+          <div className="bg-gray-100 grid grid-cols-1 place-items-center gap-y-6 bg-[#0f0f0f0]">
             {sessionList.map((session, i) => (
               <ClinicianSessionsList
-                key={session.id}
+                key={i}
                 img="/leg.png"
+                // img={session.region.iconUrl}
                 alt={session.type}
                 type={session.type}
                 sessionDate={session.scheduledTime}
                 patientName={session.patient.fullName}
+                status={session.status}
               />
             ))}
           </div>
         )}
+         </div>
       </div>
     </div>
   );
