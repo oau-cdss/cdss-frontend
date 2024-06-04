@@ -11,6 +11,9 @@ import ScheduleList from '../components/ClinicianDashboardComponents/scheduleLis
 import { SessionProvider } from '../../context/sessionContext';
 
 function ClinicianDashboard() {
+ 
+ 
+
   return (
   <SessionProvider>
       <div className='flex lg:grid grid-cols-6'>

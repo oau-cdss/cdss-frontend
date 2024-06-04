@@ -8,7 +8,7 @@ const ScheduleComponent = () => {
 
                 <Image 
                    src="/clinician-img.png" alt="clinician" width={50} height={50}
-                   className=""/>
+                  />
                 </div>
                 <div className=" w-full ml-3">
 

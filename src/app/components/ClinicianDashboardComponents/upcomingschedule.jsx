@@ -10,7 +10,7 @@ const UpcomingSchedule = () => {
 
                 <Image 
                    src="/clinician-img.png" alt="clinician" width={40} height={40}
-                   className=""/>
+                />
                 </div>
                 <div className=" w-full ml-3">
 

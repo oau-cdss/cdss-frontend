@@ -16,7 +16,7 @@ const ClinicianNavbar = () => {
     }, []);
 
     return (
-        <div className="flex-col flex lg:flex-row justify-between py-6">
+        <div className="flex-col flex lg:flex-row justify-between px-5 py-6">
             <div className="flex justify-between items-center">
                 <p className="font-bold text-2xl">
                     Welcome                   

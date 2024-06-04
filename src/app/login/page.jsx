@@ -12,11 +12,16 @@ const Login = () => {
 
     const loginSubmit = async (e) => {
         e.preventDefault();
+
+
+
+        const token = localStorage.getItem('authToken');
         try {
-            const response = await fetch('https://cdss-api.fly.dev/v1/auth/login', {
+            const response = await fetch(`https://cdss-api.fly.dev/v1/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, 
                 },
                 body: JSON.stringify({ email, password }),
             });
@@ -55,7 +60,7 @@ const Login = () => {
                 }
             } else {
                 const errorMessage = await response.text();
-                setMessage(errorMessage.slice(12, -2));
+                setMessage(errorMessage.slice(12, -3));
             }
         } catch (error) {
             console.error('Error', error);
