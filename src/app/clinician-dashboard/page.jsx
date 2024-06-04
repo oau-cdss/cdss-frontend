@@ -3,9 +3,9 @@
 import React from 'react';
 import ClinicianSideBar from '../components/ClinicianDashboardComponents/clinicianSideBar';
 import ClinicianNavbar from '../components/ClinicianDashboardComponents/clinicianNavbar';
-import FiguresComponent from '../components/ClinicianDashboardComponents/figuresComponent';
+import FiguresComponent from '../components/ClinicianDashboardComponents/FiguresComponent';
 import SessionComponent from '../components/ClinicianDashboardComponents/sessionComponent';
-import UpcomingSchedule from '../components/ClinicianDashboardComponents/upcomingSchedule';
+import UpcomingSchedule from '../components/ClinicianDashboardComponents/upcomingschedule';
 import Calendar from '../components/ClinicianDashboardComponents/calendar';
 import ScheduleList from '../components/ClinicianDashboardComponents/scheduleList';
 import { SessionProvider } from '../../context/sessionContext';
