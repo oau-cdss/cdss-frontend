@@ -1,15 +1,15 @@
 "use client"
 
-import { SessionProvider } from "../../context/sessionContext";
+import { ScheduleProvider } from "../../context/ScheduleContext";
 import ClinicianNavbar from "../components/ClinicianDashboardComponents/clinicianNavbar";
 import ClinicianSideBar from "../components/ClinicianDashboardComponents/clinicianSideBar";
 import SessionDiv from "../components/ClinicianDashboardComponents/sessionDiv";
 
-//import SessionProvider from "../../src/context/sessionContext"
+//import ScheduleProvider from "../../src/context/ScheduleContext"
 
 const ClinicianSession = () => {
     return (
-        <SessionProvider>
+        <ScheduleProvider>
 
         <div className=''>
         <div className='fixed top-0 left-0 h-100'>
@@ -39,7 +39,7 @@ const ClinicianSession = () => {
         </div>
     </div>
     </div>
-        </SessionProvider>
+        </ScheduleProvider>
     )
 }
 export default ClinicianSession;

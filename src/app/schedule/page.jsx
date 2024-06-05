@@ -1,53 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSession, SessionProvider } from "../../context/sessionContext";
+import { useState } from "react";
+import { useSchedule, ScheduleProvider } from "../../context/ScheduleContext";
 import SessionDiv from "../components/ClinicianDashboardComponents/sessionDiv";
 import ScheduleSessionOverlay from "../components/sessionsOverlay/scheduleSessionOverlay";
 import ClinicianSideBar from "../components/ClinicianDashboardComponents/clinicianSideBar";
 import ClinicianNavbar from "../components/ClinicianDashboardComponents/clinicianNavbar";
 
 const Schedule = () => {
-    const { supportedRegionList, setSupportedRegionList } = useSession();
-    const [loading, setLoading] = useState(true);
-    const [message, setMessage] = useState("")
+    const { supportedRegionList, loading} = useSchedule();
+   
 
-    const ListOfSupportedRegion = async () => {
-      
-        const token = localStorage.getItem('authToken');
-
-        if (!token) {
-            console.error('No auth token found in localStorage');
-            setLoading(false);
-            return;
-        }
-
-        try {
-            const response = await fetch(`https://cdss-api.fly.dev/v1/questions/supported-regions`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`, 
-                },
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setSupportedRegionList(data.payload.regions);
-            } else {
-                const errorData = await response.json();
-                setMessage(errorData.message);
-            }
-        } catch (error) {
-            setMessage(error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        ListOfSupportedRegion();
-    }, []); 
+   
+   
 
     return (
         <div className='flex lg:grid grid-cols-6'>
@@ -67,7 +32,7 @@ const Schedule = () => {
                     ) : (
                         <div className='grid grid-cols-1 lg:grid-cols-3 place-items-center gap-y-16 gap-x-3 py-6'>
                             {
-                                supportedRegionList.map((list, i) => (
+                                supportedRegionList.slice(0, 3).map((list, i) => (
                                     <SessionDiv key={i} img={list.iconUrl} altTitle={list.name} title={list.name} regionId={list.id}/>
                                 ))
                             }
@@ -81,9 +46,9 @@ const Schedule = () => {
 };
 
 const ScheduleWithProvider = () => (
-    <SessionProvider>
+    <ScheduleProvider>
         <Schedule />
-    </SessionProvider>
+    </ScheduleProvider>
 );
 
 export default ScheduleWithProvider;

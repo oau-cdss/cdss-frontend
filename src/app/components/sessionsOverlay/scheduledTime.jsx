@@ -1,6 +1,6 @@
 "use client"
 import React, {useState} from 'react';
-import { useSession } from '../../../context/sessionContext';
+import { useSchedule } from '../../../context/ScheduleContext';
 import { CgDanger } from "react-icons/cg";
 
 const ScheduledTime = () => {
@@ -11,7 +11,7 @@ const ScheduledTime = () => {
         selectedTime, setSelectedTime,
         steps, setSteps,
         patientEmail, scheduledTime, illnessType, regionId
-    } = useSession();
+    } = useSchedule();
 
     const dates = [...Array(31).keys()].map(i => i + 1);
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];

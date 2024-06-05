@@ -1,10 +1,10 @@
 "use client";
 
-import { useSession } from "../../../context/sessionContext";
+import { useSchedule } from "../../../context/ScheduleContext";
 import Image from "next/image";
 
 const SessionDiv = ({ img, altTitle, title, regionId }) => {
-    const { setStartSession, setIllnessType, setRegionId} = useSession();
+    const { setStartSession, setIllnessType, setRegionId} = useSchedule();
 
     return (
         <div

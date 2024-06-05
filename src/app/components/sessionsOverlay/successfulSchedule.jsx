@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { useSession } from "../../../context/sessionContext";
+import { useSchedule } from "../../../context/ScheduleContext";
 //import { Link } from "react-router-dom";
 
 const SuccessfulSchedule = () => {
-    const { successfulSchedule } = useSession()
+    const { successfulSchedule } = useSchedule()
     return (
         <>
         {successfulSchedule && <div className="py-8 flex flex-col items-center">

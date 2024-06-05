@@ -1,10 +1,10 @@
 "use client" 
-import { useSession } from "../../../context/sessionContext";
+import { useSchedule } from "../../../context/ScheduleContext";
 
 const PatientDetails = () => {
     const {    
         patientEmail,  setpatientEmail
-    } = useSession();
+    } = useSchedule();
 
     return (
         <>
