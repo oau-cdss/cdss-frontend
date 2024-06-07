@@ -17,7 +17,7 @@ const Login = () => {
 
         const token = localStorage.getItem('authToken');
         try {
-            const response = await fetch(`https://cdss-api.fly.dev/v1/auth/login`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_ROOT_URL}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

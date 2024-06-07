@@ -4,8 +4,8 @@ import Image from "next/image";
 import { FiInfo } from "react-icons/fi";
 import { useSession } from "../../../../context/sessionContext";
 
-const ClinicianSessionsList = ({ img, altTitle, type,  sessionDate, patientName, status}) => {
-    const { setContinueSession, setSessionId,  setCurrentSessionId} = useSession()
+const ClinicianSessionsList = ({ img, altTitle, type,  sessionDate, patientName, status, onClick}) => {
+    const { setContinueSession, sessionId,  setCurrentSessionId} = useSession()
    
 
     return (
@@ -61,11 +61,7 @@ const ClinicianSessionsList = ({ img, altTitle, type,  sessionDate, patientName,
                     ) : 
                     (
                 <button 
-                       onClick={() => {
-                        setContinueSession(true);
-                        setCurrentSessionId(setSessionId)
-                      
-                       }}
+                       onClick={onClick}
                         className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
                         type="submit"
                     >

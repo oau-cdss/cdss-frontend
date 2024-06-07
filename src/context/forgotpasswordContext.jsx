@@ -30,7 +30,7 @@ export const ForgotPasswordProvider = ({children,  ...options}) => {
     const emailSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://cdss-api.fly.dev/v1/auth/request-password-reset', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_ROOT_URL}/auth/request-password-reset`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

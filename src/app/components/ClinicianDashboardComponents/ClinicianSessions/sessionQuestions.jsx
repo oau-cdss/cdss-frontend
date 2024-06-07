@@ -11,12 +11,11 @@ const SessionQuestion = () => {
 
   useEffect(() => {
     const listOfSessions = async () => {
-      const url = new URL(`https://cdss-api.fly.dev/v1/sessions/${currentSessionId}/resume`);
+      const url = new URL(`${process.env.NEXT_PUBLIC_ROOT_URL}/sessions/${currentSessionId}/resume`);
       const token = localStorage.getItem('authToken');
+      console.log(token)
       const params = { currentSessionId };
-
-     
-
+    
       try {
         const response = await fetch(url, {
           method: 'PUT',
@@ -28,14 +27,14 @@ const SessionQuestion = () => {
 
         if (response.ok) {
           const data = await response.json();
-          setSessionQuestions(data);
+          setSessionQuestions(data.payload);
         } else {
           const errorData = await response.json();
           console.error('Error:', errorData);
         }
       } catch (error) {
         console.error('Error', error);
-        alert(`Error: ${error.message}`);
+        
       } finally {
         setLoading(false);
       }
@@ -56,11 +55,12 @@ const SessionQuestion = () => {
                 <p>Loading...</p>
               ) : (
                 <ul>
-                  {sessionQuestions.map(questions => (
+                  {/* {sessionQuestions.map(questions => (
                     <div key={questions.id}>
                         <p>{questions.text}</p>
                     </div>
-                  ))}
+                  ))} */}
+                  {sessionQuestions.kind}
                 </ul>
               )}
             </div>

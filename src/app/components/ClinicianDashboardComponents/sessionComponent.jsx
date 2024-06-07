@@ -19,7 +19,7 @@ const SessionComponent = () => {
             </div>
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-y-3 gap-x-6'>
             {
-                                supportedRegionList.slice(0, showAllSupportedRegions ? data.length: 3).map((list, i) => (
+                                supportedRegionList.slice(0, 3).map((list, i) => (
                                     <SessionDiv key={i} img={list.iconUrl} altTitle={list.name} title={list.name} regionId={list.id}/>
                                 ))
                             }

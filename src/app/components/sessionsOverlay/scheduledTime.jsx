@@ -1,5 +1,5 @@
-"use client"
-import React, {useState} from 'react';
+"use client";
+import React from 'react';
 import { useSchedule } from '../../../context/ScheduleContext';
 import { CgDanger } from "react-icons/cg";
 
@@ -9,20 +9,18 @@ const ScheduledTime = () => {
         selectedMonth, setSelectedMonth,
         selectedYear, setSelectedYear,
         selectedTime, setSelectedTime,
-        steps, setSteps,
-        patientEmail, scheduledTime, illnessType, regionId
+        patientEmail, scheduledTime, illnessType, regionId,
+        setSuccessfulSchedule, message, setMessage, setSteps
     } = useSchedule();
 
     const dates = [...Array(31).keys()].map(i => i + 1);
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const years = Array.from({ length: 2040 - 2023 + 1 }, (_, i) => 2023 + i);
-    const [message, setMessage] = useState("")
 
-   
     const ScheduleSession = async () => {
         const token = localStorage.getItem('authToken');
         const payload = { patientEmail, type: illnessType, scheduledTime, regionId };
-       
+
         try {
             const response = await fetch(`https://cdss-api.fly.dev/v1/sessions/schedule`, {
                 method: 'POST',
@@ -33,17 +31,16 @@ const ScheduledTime = () => {
                 body: JSON.stringify(payload),
             });
 
-            if (response.ok) {
+            if (response.ok || response.status === '201') {
                 const data = await response.json();
-                setSuccessfulSchedule(true)
+                setSuccessfulSchedule(true);
+                setMessage(data.message);
                 setSteps(3)
-                
+
                 if (data && data.payload && data.payload.clinician) {
                     const type = data.payload.type;
                     const fullName = data.payload.clinician.fullName;
                     const scheduledTime = data.payload.scheduledTime;
-                   
-                   
                 } else {
                     setMessage("Invalid response structure from the server.");
                     console.error('Invalid response structure:', data);
@@ -54,7 +51,7 @@ const ScheduledTime = () => {
             }
         } catch (error) {
             console.error('Error', error);
-            setMessage('An unexpected error occurred. Please try again.');
+            
         }
     };
 
@@ -65,17 +62,17 @@ const ScheduledTime = () => {
                 Please provide your available date and time in the text box below
             </p>
             <div className="w-full max-w-md">
-           {message && <div className="flex items-center text-red-600 mb-3">
-                                <CgDanger size={25} />
-                                <p className="ml-2 text-base">{message}</p>
-                            </div>}
+                {message && <div className="flex items-center text-red-600 mb-3">
+                    <CgDanger size={25} />
+                    <p className="ml-2 text-base">{message}</p>
+                </div>}
                 <div>
                     <div className="grid grid-cols-3 gap-x-6 mb-4">
                         <div className="flex flex-col gap-y-1">
                             <label htmlFor="date" className="font-medium">Date</label>
-                            <select 
-                                id="date" 
-                                aria-label="Select Date" 
+                            <select
+                                id="date"
+                                aria-label="Select Date"
                                 className="w-full h-[40px] border border-gray-300 focus:outline-none rounded-md py-2 px-4"
                                 value={selectedDate}
                                 onChange={(e) => setSelectedDate(e.target.value)}
@@ -88,13 +85,13 @@ const ScheduledTime = () => {
 
                         <div className="flex flex-col gap-y-1">
                             <label htmlFor="month" className="font-medium">Month</label>
-                            <select 
-                                id="month" 
-                                aria-label="Select Month" 
+                            <select
+                                id="month"
+                                aria-label="Select Month"
                                 className="w-full h-[40px] border border-gray-300 focus:outline-none rounded-md py-2 px-4"
                                 value={selectedMonth}
-                                onChange={(e) => { 
-                                    setSelectedMonth(e.target.value)
+                                onChange={(e) => {
+                                    setSelectedMonth(e.target.value);
                                 }}
                             >
                                 {months.map((month, index) => (
@@ -105,9 +102,9 @@ const ScheduledTime = () => {
 
                         <div className="flex flex-col gap-y-1">
                             <label htmlFor="year" className="font-medium">Year</label>
-                            <select 
-                                id="year" 
-                                aria-label="Select Year" 
+                            <select
+                                id="year"
+                                aria-label="Select Year"
                                 className="w-full h-[40px] border border-gray-300 focus:outline-none rounded-md py-2 px-4"
                                 value={selectedYear}
                                 onChange={(e) => setSelectedYear(e.target.value)}
@@ -121,27 +118,25 @@ const ScheduledTime = () => {
 
                     <div className="flex flex-col gap-y-1 mb-8">
                         <label htmlFor="time" className="font-medium">Time</label>
-                        <input 
-                            type="time" 
-                            id="time" 
-                            aria-label="Select Time" 
-                            className="w-full h-[40px] border border-gray-300 rounded-md py-2 px-4 focus:outline-none" 
+                        <input
+                            type="time"
+                            id="time"
+                            aria-label="Select Time"
+                            className="w-full h-[40px] border border-gray-300 rounded-md py-2 px-4 focus:outline-none"
                             value={selectedTime}
                             onChange={(e) => setSelectedTime(e.target.value)}
                         />
                     </div>
 
-                   <div className=" flex justify-center">
-
-                    <button 
-                        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
-                        type="submit"
-                        onClick={
-                            ScheduleSession}
-                            >
-                        Start Session
-                    </button>
-                        </div>
+                    <div className="flex justify-center">
+                        <button
+                            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+                            type="submit"
+                            onClick={ScheduleSession}
+                        >
+                            Start Session
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

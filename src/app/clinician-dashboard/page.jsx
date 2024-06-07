@@ -9,6 +9,7 @@ import UpcomingSchedule from '../components/ClinicianDashboardComponents/upcomin
 import Calendar from '../components/ClinicianDashboardComponents/calendar';
 import ScheduleList from '../components/ClinicianDashboardComponents/scheduleList';
 import { ScheduleProvider } from '../../context/ScheduleContext';
+import { SessionProvider } from '../../context/sessionContext';
 
 function ClinicianDashboard() {
  
@@ -16,6 +17,8 @@ function ClinicianDashboard() {
 
   return (
   <ScheduleProvider>
+    <SessionProvider>
+
       <div className='flex lg:grid grid-cols-6'>
         <ClinicianSideBar />
         <div className='px-2 lg:px-7 col-span-5'>
@@ -37,6 +40,7 @@ function ClinicianDashboard() {
           </div>
         </div>
       </div>
+    </SessionProvider>
       </ScheduleProvider>
   );
 }

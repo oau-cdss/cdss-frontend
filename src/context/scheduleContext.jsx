@@ -43,7 +43,7 @@ export const ScheduleProvider = ({ children }) => {
         }
 
         try {
-            const response = await fetch(`https://cdss-api.fly.dev/v1/questions/supported-regions`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_ROOT_URL}/questions/supported-regions`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export const ScheduleProvider = ({ children }) => {
             selectedMonth, setSelectedMonth,
             selectedYear, setSelectedYear,
             selectedTime, setSelectedTime,
-            message,
+            message, setMessage,
             steps, setSteps,
             supportedRegionList, setSupportedRegionList,
             regionId, setRegionId,

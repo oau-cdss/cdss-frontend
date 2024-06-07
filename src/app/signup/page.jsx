@@ -19,7 +19,7 @@ const SignUp = () => {
     const signupSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://cdss-api.fly.dev/v1/auth/register', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_ROOT_URL}/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +49,6 @@ const SignUp = () => {
             }
         } catch (error) {
             console.error('Error', error);
-            alert(error);
            
         }
     };
