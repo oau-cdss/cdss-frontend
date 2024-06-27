@@ -14,7 +14,6 @@ const ReviewsCarouselControl = (props) => {
         onClick={() => {
           if (props.canScrollPrev) {
             props.onPrev();
-            alert("hello")
           }
         }}
         disabled={!props.canScrollPrev}

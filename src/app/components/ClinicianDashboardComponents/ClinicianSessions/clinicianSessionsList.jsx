@@ -3,10 +3,13 @@
 import Image from "next/image";
 import { FiInfo } from "react-icons/fi";
 import { useSession } from "../../../../context/sessionContext";
+import { format } from "date-fns";
 
 const ClinicianSessionsList = ({ img, altTitle, type,  sessionDate, patientName, status, onClick}) => {
     const { setContinueSession, sessionId,  setCurrentSessionId} = useSession()
    
+    const formattedDate = format(sessionDate, "MMMM dd, yyyy");
+    const formattedTime = format(sessionDate, "h:mm a");
 
     return (
         <div
@@ -25,16 +28,16 @@ const ClinicianSessionsList = ({ img, altTitle, type,  sessionDate, patientName,
                     Session Date
                 </p>
                 <p className="font-semibold text-base text-gray-600">
-                    {sessionDate}
+                    {formattedDate}
                 </p>
             </div>
 
             <div  className="flex flex-col gap-y-1">
                 <p className="font-normal text-sm text-gray-400">
-                    Session Date
+                    Session Time
                 </p>
                 <p className="font-semibold text-base text-gray-600">
-                    {sessionDate}
+                    {formattedTime}
                 </p>
             </div>
             <div className="flex flex-col gap-y-1">

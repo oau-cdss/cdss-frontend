@@ -2,11 +2,11 @@
 import Link from 'next/link.js';
 import SessionDiv from './sessionDiv.jsx';
 import { useSchedule } from '../../../context/ScheduleContext.jsx';
-import { useState } from 'react';
+import SessionDivSkeletonLoader from '../LoadingPhase/sessionDivSkeletonLoader.jsx';
 
 const SessionComponent = () => {
-    const { supportedRegionList } = useSchedule();
-    const [showAllSupportedRegions, setShowAllSupportedRegions] = useState(false)
+    const { supportedRegionList,loading } = useSchedule();
+   
     return (
 
         <div className="bg-gray-100  p-5 rounded-lg">
@@ -17,12 +17,21 @@ const SessionComponent = () => {
                 <p className='text-[#1e59cf] underline text-base font-semibold'>See more</p>
                 </Link>
             </div>
+            
+
+         
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-y-3 gap-x-6'>
-            {
+            { loading ? 
+            (
+                <SessionDivSkeletonLoader count={3}/>
+
+            ) : (
+            
                                 supportedRegionList.slice(0, 3).map((list, i) => (
                                     <SessionDiv key={i} img={list.iconUrl} altTitle={list.name} title={list.name} regionId={list.id}/>
                                 ))
-                            }
+                            
+                        )}
             </div>
         </div>
     )
