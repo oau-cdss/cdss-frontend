@@ -8,7 +8,7 @@ import SessionComponent from '../components/ClinicianDashboardComponents/session
 import UpcomingSchedule from '../components/ClinicianDashboardComponents/upcomingschedule';
 import Calendar from '../components/ClinicianDashboardComponents/calendar';
 import ScheduleList from '../components/ClinicianDashboardComponents/scheduleList';
-import { ScheduleProvider } from '../../context/ScheduleContext';
+import { ScheduleProvider } from '../../context/scheduleContext';
 import { SessionProvider } from '../../context/sessionContext';
 
 function ClinicianDashboard() {

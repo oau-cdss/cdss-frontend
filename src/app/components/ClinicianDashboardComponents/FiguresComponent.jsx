@@ -7,7 +7,7 @@ const FiguresComponent = () => {
     useEffect(() => {
         listOfPatients()
 
-    }, [])
+    }, [listOfPatients])
 
     let SessionTotal = sessionList.length
     let PatientTotal = patientList.length

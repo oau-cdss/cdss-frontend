@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link.js';
 import SessionDiv from './sessionDiv.jsx';
-import { useSchedule } from '../../../context/ScheduleContext.jsx';
+import { useSchedule } from '../../../context/scheduleContext.jsx';
 import SessionDivSkeletonLoader from '../LoadingPhase/sessionDivSkeletonLoader.jsx';
 
 const SessionComponent = () => {

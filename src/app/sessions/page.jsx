@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from 'react';
-import { ScheduleProvider } from "../../context/ScheduleContext";
+import { ScheduleProvider } from "../../context/scheduleContext";
 import ClinicianSideBar from "../components/ClinicianDashboardComponents/clinicianSideBar";
 import ClinicianNavbar from "../components/ClinicianDashboardComponents/clinicianNavbar";
 import ClinicianSessionsList from "../components/ClinicianDashboardComponents/ClinicianSessions/clinicianSessionsList";

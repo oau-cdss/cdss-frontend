@@ -10,7 +10,7 @@ const ScheduleList = () => {
 
     useEffect(() => {
         listOfSessions();
-    }, []);
+    }, [listOfSessions]);
 
     return (
         <div className="w-full shadow-md bg-gray-100 rounded-lg p-3">

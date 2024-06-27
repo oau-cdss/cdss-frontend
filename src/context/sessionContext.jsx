@@ -95,7 +95,6 @@ export const SessionProvider = ({ children }) => {
         }
       } catch (error) {
         console.error('Error', error);
-        alert(`Error: ${error.message}`);
       } finally {
         setLoading(false);
       }

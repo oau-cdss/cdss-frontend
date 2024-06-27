@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { useSchedule } from '../../../context/ScheduleContext';
+import { useSchedule } from '../../../context/scheduleContext';
 import { CgDanger } from "react-icons/cg";
 
 const ScheduledTime = () => {

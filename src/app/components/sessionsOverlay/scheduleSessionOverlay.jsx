@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useSchedule } from "../../../context/ScheduleContext";
+import { useSchedule } from "../../../context/scheduleContext";
 import Overlay from "./overlay";
 import PatientDetails from "./patientDetails";
 import ScheduledTime from "./scheduledTime";
@@ -9,7 +8,7 @@ import SuccessfulSchedule from "./successfulSchedule";
 import { IoClose } from "react-icons/io5";
 
 const ScheduleSessionOverlay = () => {
-    const { startSession, setStartSession, ScheduleSession, steps, setSteps
+    const { startSession, setStartSession, steps, setSteps
 
      } = useSchedule();
    

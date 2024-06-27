@@ -5,7 +5,7 @@ import Reviews from "./components/reviews/reviews";
 import AboutCarousel from "./components/aboutCarousel/aboutCarousel";
 import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
-import {ScheduleProvider} from "../context/ScheduleContext"
+import {ScheduleProvider} from "../context/scheduleContext"
 
 export default function Home() {
   return (

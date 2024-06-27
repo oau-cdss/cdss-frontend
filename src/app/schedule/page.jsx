@@ -1,6 +1,6 @@
 "use client";
 
-import { useSchedule, ScheduleProvider } from "../../context/ScheduleContext";
+import { useSchedule, ScheduleProvider } from "../../context/scheduleContext";
 import SessionDiv from "../components/ClinicianDashboardComponents/sessionDiv";
 import ScheduleSessionOverlay from "../components/sessionsOverlay/scheduleSessionOverlay";
 import ClinicianSideBar from "../components/ClinicianDashboardComponents/clinicianSideBar";
