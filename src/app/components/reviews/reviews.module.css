@@ -6,6 +6,10 @@
     align-items: center;
     justify-content: center;
     width: 100vw;
+
+    @media screen and (max-width: 780px) {
+        padding: auto 10px;
+    }
 }
 
 .textContainer {
@@ -23,7 +27,7 @@
     width: 597px;
 
     @media screen and (max-width: 1024px) {
-        width: 100vw;
+        width: 90vw;
         font-size: 24px;
         line-height: 35px;
     }
@@ -39,7 +43,7 @@
     margin-top: 30px;
 
     @media screen and (max-width: 1024px) {
-        width: 100vw;
+        width: 90vw;
         line-height: 24px;
     }
 }
@@ -62,6 +66,10 @@
     display: flex;
     flex-direction: column;
 
+    @media screen and (max-width: 1024px) {
+        margin: 100px 0px;
+    }
+
 
 
 }
@@ -71,5 +79,5 @@
     font-weight: 500;
     font-size: 24px;
     text-align: center;
-    margin-bottom: 15px; 
+    margin-bottom: 35px; 
 }

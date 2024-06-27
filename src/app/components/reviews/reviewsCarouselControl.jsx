@@ -6,7 +6,7 @@ import Dots from "../carousel/dots"
 
 const ReviewsCarouselControl = (props) => {
   return (
-    <div className="flex flex-col items-center -mt-24">
+    <div className="flex flex-col items-center t-24">
       
         <Dots itemsLength={props.itemsLength} selectedIndex={props.selectedIndex} gap="gap-x-0" width="w-10" minWidth="w-10" />
       <div className="flex gap-x-7 mt-5">
@@ -29,7 +29,6 @@ const ReviewsCarouselControl = (props) => {
         onClick={() => {
           if (props.canScrollNext) {
             props.onNext();
-            alert("next")
           }
         }}
         disabled={!props.canScrollNext}

@@ -5,6 +5,8 @@
      
   }
 } 
+
+
 .wrapper {
     display: flex;
     align-items: center;
@@ -14,7 +16,6 @@
     height: 88px;
     background-color: #fff;
     width: 80vw; /* width: 1280px; */
-    background-color: #fff;
     border-radius: 8px;
     border: 1px;
     border-color: #fff;

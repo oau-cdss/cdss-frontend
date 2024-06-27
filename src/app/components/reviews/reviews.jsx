@@ -45,7 +45,7 @@ const Reviews = () => {
 
                     {reviews.map((rev, i) => {
                         return (
-                            <div className="relative h-64 flex-[0_0_100%]" key={i}>
+                            <div className="relative h-60 lg:h-64 flex-[0_0_100%]" key={i}>
     <CustomerReview
       key={i}
       content={rev.CustomersReview}
