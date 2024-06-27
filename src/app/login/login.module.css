@@ -3,7 +3,7 @@
 .loginContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    max-height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     overflow: hidden;
 
@@ -134,6 +134,7 @@ right: -550px;
     border-radius: 8px;
     margin-top: 6px;
     outline: none;
+    margin-bottom: 4px;
 
     @media screen and (max-width: 768px){
      width:90vw;

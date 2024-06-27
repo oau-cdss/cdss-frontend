@@ -2,9 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-
 const ScheduleContext = createContext();
-
 
 export const ScheduleProvider = ({ children }) => {
     const [startSession, setStartSession] = useState(false);
@@ -17,23 +15,20 @@ export const ScheduleProvider = ({ children }) => {
     const [steps, setSteps] = useState(1);
     const [supportedRegionList, setSupportedRegionList] = useState([]);
     const [regionId, setRegionId] = useState("");
-    const [patientEmail, setpatientEmail] = useState("");
+    const [patientEmail, setPatientEmail] = useState("");
     const [successfulSchedule, setSuccessfulSchedule] = useState(false);
     const [loading, setLoading] = useState(true);
-    
 
     const formattedDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(selectedDate).padStart(2, '0')}`;
-    
-  
+
     const [hour, minute, second] = selectedTime.split(':');
     const formattedTime = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second || '00').padStart(2, '0')}`;
-    
-    const scheduledFormattedTime = new Date(`${formattedDate}T${formattedTime}`).toLocaleTimeString('en-GB', { hour12: false });
-    const scheduledTime = `${formattedDate}T${scheduledFormattedTime}`
 
-    //fetch list of supported regions
-    const ListOfSupportedRegion = async () => {
-      
+    const scheduledFormattedTime = new Date(`${formattedDate}T${formattedTime}`).toLocaleTimeString('en-GB', { hour12: false });
+    const scheduledTime = `${formattedDate}T${scheduledFormattedTime}`;
+
+    // Fetch list of supported regions
+    const listOfSupportedRegions = async () => {
         const token = localStorage.getItem('authToken');
 
         if (!token) {
@@ -59,15 +54,15 @@ export const ScheduleProvider = ({ children }) => {
                 setMessage(errorData.message);
             }
         } catch (error) {
-            setMessage(error);
+            setMessage(error.message);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        ListOfSupportedRegion();
-    }, []); 
+        listOfSupportedRegions();
+    }, []);
 
     return (
         <ScheduleContext.Provider value={{
@@ -81,7 +76,7 @@ export const ScheduleProvider = ({ children }) => {
             steps, setSteps,
             supportedRegionList, setSupportedRegionList,
             regionId, setRegionId,
-            patientEmail, setpatientEmail, 
+            patientEmail, setPatientEmail, 
             scheduledTime,
             successfulSchedule, setSuccessfulSchedule,
             loading, setLoading
@@ -91,7 +86,6 @@ export const ScheduleProvider = ({ children }) => {
     );
 };
 
-
 export const useSchedule = () => {
     const context = useContext(ScheduleContext);
     if (!context) {
@@ -99,5 +93,3 @@ export const useSchedule = () => {
     }
     return context;
 };
-
-

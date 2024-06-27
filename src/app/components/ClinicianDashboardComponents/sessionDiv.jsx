@@ -1,6 +1,6 @@
 "use client";
 
-import { useSchedule } from "../../../context/ScheduleContext";
+import { useSchedule } from '../../../context/scheduleContext';
 import Image from "next/image";
 
 const SessionDiv = ({ img, altTitle, title, regionId }) => {

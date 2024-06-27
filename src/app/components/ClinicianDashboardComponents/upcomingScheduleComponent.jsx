@@ -28,7 +28,7 @@ const UpcomingScheduleComponent = ({ name, time }) => {
                             <p className="font-semibold text-base">{name}</p>
                             <div className="flex justify-between">
                             <p className="font-normal text-sm text-gray-400">{formattedDate}</p>
-                            <p className="font-normal text-sm text-gray-400">{formattedTime}</p>
+                            <p className="font-normal text-sm text-gray-400 ml-2">{formattedTime}</p>
                             </div>
                         </div>
                         <Link href="/sessions">

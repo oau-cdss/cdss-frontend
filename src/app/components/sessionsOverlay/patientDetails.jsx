@@ -1,5 +1,5 @@
 "use client" 
-import { useSchedule } from "../../../context/ScheduleContext";
+import { useSchedule } from "../../../context/scheduleContext";
 
 const PatientDetails = () => {
     const {    

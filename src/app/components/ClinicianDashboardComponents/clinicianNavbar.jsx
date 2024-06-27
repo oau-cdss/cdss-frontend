@@ -1,11 +1,13 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import Image from "next/image";
 import { FaBell } from "react-icons/fa";
+import { useSession } from '../../../context/sessionContext';
 
-const ClinicianNavbar = () => {
+const ClinicianNavbar = ({ currentRegion }) => {
+    const { continueSession } = useSession();
     const [firstName, setFirstName] = useState('');
     const [nameInitials, setNameInitials] = useState('');
+    const [savedCurrentRegion, setSavedCurrentRegion] = useState('');
 
     useEffect(() => {
         const fullName = localStorage.getItem('fullName');
@@ -15,17 +17,29 @@ const ClinicianNavbar = () => {
             setFirstName(words[0]);
             setNameInitials(words.map(word => word[0]).join(''));
         }
-    }, []);
+
+        const region = localStorage.getItem("savedCurrentRegion");
+
+        if (region) {
+            setSavedCurrentRegion(region);
+        }
+    }, [currentRegion]);
 
     return (
         <div className="flex-col flex lg:flex-row justify-between px-5 py-6">
             <div className="flex justify-between items-center">
-                <p className="font-bold text-2xl">
-                    Welcome                   
-                    <span className="text-[#1e59cf] ml-2">
-                     {firstName}!                     
-                    </span>
-                </p>
+                {continueSession ? (
+                    <>
+                        <p className="text-2xl font-semibold">{currentRegion || savedCurrentRegion}</p>
+                    </>
+                ) : (
+                    <p className="font-bold text-2xl">
+                        Welcome                   
+                        <span className="text-[#1e59cf] ml-2">
+                            {firstName}!                     
+                        </span>
+                    </p>
+                )}
 
                 <div className="lg:hidden flex items-center">
                     <div className="mr-3 text-gray-500 relative">
@@ -34,13 +48,9 @@ const ClinicianNavbar = () => {
                     </div>
 
                     <div className="flex justify-center items-center p-1 border w-auto border-[#6761ff] rounded-full">
-                        {/* <Image src="/clinician-img.png" alt="clinician-img" width={35} height={35}/> */}
                         <div className='w-9 h-9 rounded-full border border-[#6761ff] flex items-center justify-center '>
-                        <p>
-                        {nameInitials}
-                        </p>
-                    </div>
-                       
+                            <p>{nameInitials}</p>
+                        </div>
                     </div>    
                 </div>
             </div>
@@ -57,11 +67,8 @@ const ClinicianNavbar = () => {
 
                 <div className="hidden lg:flex items-center p-3 border border-[#6761ff] rounded-md">
                     <div className='w-9 h-9 rounded-full border border-[#6761ff] flex items-center justify-center '>
-                        <p>
-                        {nameInitials}
-                        </p>
+                        <p>{nameInitials}</p>
                     </div>
-               
                     <p className="ml-3 text-[#03021b] font-semibold text-base">{firstName}</p>
                 </div>
             </div>
@@ -69,4 +76,7 @@ const ClinicianNavbar = () => {
     );
 };
 
-export default ClinicianNavbar;
+
+  
+  export default ClinicianNavbar ;
+  

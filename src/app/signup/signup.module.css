@@ -127,6 +127,8 @@ right: -550px;
     padding: 10px 15px;
     border-radius: 8px;
     margin-top: 6px;
+    margin-bottom: 4px;
+
     /* outline: none; */
 
     @media screen and (max-width: 768px){

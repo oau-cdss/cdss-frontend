@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useSchedule } from "../../../context/ScheduleContext";
+import { useSchedule } from "../../../context/scheduleContext";
 //import { Link } from "react-router-dom";
 
 const SuccessfulSchedule = () => {
