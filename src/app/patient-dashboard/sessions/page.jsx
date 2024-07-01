@@ -90,7 +90,7 @@ function Patient() {
             {loading ? ( // Display loading state if data is being fetched
           <p className="text-center text-gray-500">Loading...</p>
         ) : (
-            <div className="grid grid-cols-3 gap-8">
+            <div className="grid lg:grid-cols-3 xl:grid-cols-3 gap-8">
               {result.map((item, index) => (
                 <div
                   key={index}
