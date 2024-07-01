@@ -147,8 +147,8 @@ function Main() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-full  w-[100%] gap-8  p-8 text-[#03021B4D]">
-      <Modal
+    <div>
+       <Modal
         isOpen={!!selectedSession}
         onClose={closeModal}
         initialText={question}
@@ -156,7 +156,8 @@ function Main() {
         sessionId={selectedSession?.id}
         setQuestion={setQuestion}
       />
-      <div className="lg:w-[50%] xl:w-[50%] w-screen h-fit border shadow-md bg-[#F9F9F9] p-4 rounded-lg flex flex-col gap-8">
+      <div className="flex flex-col lg:flex-row h-full  w-full gap-8  p-8 text-[#03021B4D]">
+      <div className="lg:w-[50%] xl:w-[50%] w-full h-fit border shadow-md bg-[#F9F9F9]  p-4 rounded-lg flex flex-col gap-8">
         {/* <h3 className="text-xl font-semibold pb-4">Choose a session</h3>
         {loading ? (
           <p className="text-center text-gray-500">Loading...</p>
@@ -173,14 +174,14 @@ function Main() {
             ))}
           </div>
         )} */}
-        <div className="bg-[#F9F9F9] p-4 grid grid-cols-3 gap-4 font-bold border rounded-lg">
+        <div className="bg-[#F9F9F9]  w-full grid lg:grid-cols-2 xl:grid-cols-3 gap-4 font-bold">
           <div className="border rounded-lg p-3 flex flex-col gap-8">
             <div className="flex items-start gap-2 text-base bg-[#F9F9F9]">
               <Image
                 src="/total.png"
                 alt="sessions.png"
-                width={40}
-                height={40}
+                width={25}
+                height={25}
               />
               <p>Total Sessions</p>
             </div>
@@ -192,8 +193,8 @@ function Main() {
               <Image
                 src="/upcoming.png"
                 alt="sessions.png"
-                width={40}
-                height={40}
+                width={25}
+                height={25}
               />
               <p>Upcoming Sessions</p>
             </div>
@@ -204,8 +205,8 @@ function Main() {
               <Image
                 src="/completed.png"
                 alt="sessions.png"
-                width={40}
-                height={40}
+                width={25}
+                height={25}
               />
               <p>Completed Sessions</p>
             </div>
@@ -235,7 +236,7 @@ function Main() {
           </p>
         </div>
       </div>
-      <div className="lg:w-[50%] xl:w-[50%] w-screen h-fit bg-[#F9F9F9] border shadow-md p-8 rounded-lg">
+      <div className="lg:w-[50%] xl:w-[50%] w-full h-fit bg-[#F9F9F9] border shadow-md p-8 rounded-lg">
         <h3 className="text-xl font-semibold  pb-4">Scheduled sessions</h3>
         <div className="flex flex-col gap-8 text-[#03021B4D]">
           {sessions.length === 0 ? (
@@ -312,6 +313,8 @@ function Main() {
         </div>
       </div>
     </div>
+    </div>
+    
   );
 }
 

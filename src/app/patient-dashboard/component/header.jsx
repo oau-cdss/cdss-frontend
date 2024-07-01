@@ -1,13 +1,16 @@
-'use client'
+"use client";
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import styles from "./../../components/ClinicianDashboardComponents/ClinicianComponents.module.css";
+import { FaCalendar, FaEnvelope, FaSignOutAlt } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 
 function Header({ isDropdownOpen }) {
-  const [fullName, setFullName] = useState('');
-  const [fullNamePrefix, setFullNamePrefix] = useState('');
+  const [fullNamePrefix, setFullNamePrefix] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [isOpen, setIsOpen] = useState(isDropdownOpen);
 
   const router = useRouter();
@@ -18,7 +21,7 @@ function Header({ isDropdownOpen }) {
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
 
   const basePath = "/patient-dashboard";
@@ -27,101 +30,150 @@ function Header({ isDropdownOpen }) {
   const activeStyle = "text-[#1E59CF] bg-[#03021B66]";
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const fullNameFromStorage = localStorage.getItem("fullName");
-
       if (fullNameFromStorage) {
-        const nameParts = fullNameFromStorage.split(' ');
-        const firstName = nameParts[0];
-        const lastName = nameParts[1];
+        const nameParts = fullNameFromStorage.split(" ");
+        const firstNameExtracted = nameParts[0];
+        const lastNameExtracted = nameParts[1];
 
-        if (!lastName && firstName) {
-          setFullName(firstName);
-          setFullNamePrefix(firstName.slice(0, 1));
-        } else if (!firstName && lastName) {
-          setFullName(lastName);
-          setFullNamePrefix(lastName.slice(0, 1));
-        } else if (!firstName && !lastName) {
-          setFullName("Avatar");
+        if (firstNameExtracted) {
+          setFirstName(firstNameExtracted);
+        } else {
+          setFirstName("Guest");
+        }
+
+        if (!lastNameExtracted && firstNameExtracted) {
+          setFullNamePrefix(firstNameExtracted.slice(0, 1));
+        } else if (!firstNameExtracted && lastNameExtracted) {
+          setFullNamePrefix(lastNameExtracted.slice(0, 1));
+        } else if (!firstNameExtracted && !lastNameExtracted) {
           setFullNamePrefix("A");
         } else {
-          setFullName(fullNameFromStorage);
-          setFullNamePrefix(`${firstName.slice(0, 1)}${lastName.slice(0, 1)}`);
+          setFullNamePrefix(
+            `${firstNameExtracted.slice(0, 1)}${lastNameExtracted.slice(0, 1)}`
+          );
         }
       } else {
-        setFullName('Guest');
-        setFullNamePrefix('G');
+        setFirstName("Guest");
+        setFullNamePrefix("G");
       }
     }
   }, []);
 
   return (
-    //this is the header
+    // This is the header
     <div className="h-1/5 w-full p-10 flex gap-4 justify-between items-center relative">
-      <div className="flex gap-5 lg:hidden xl:hidden items-center">
+      <div className="flex justify-between w-full lg:hidden xl:hidden items-center">
         <div className="text-[#0D0D0D] font-bold text-2xl flex items-center gap-3">
           <Image src="/logo.png" alt="logo" width={40} height={40} />
           CDSS
         </div>
-        <button onClick={toggleDropdown} className="text-[#0D0D0D] font-bold text-2xl">
+        <button
+          onClick={toggleDropdown}
+          className="text-[#0D0D0D] font-bold text-2xl z-20"
+        >
           ☰
         </button>
       </div>
-      <div>
-        <h3 className="font-semibold lg:text-4xl">
-          Welcome <span className="text-[#1E59CF]">{fullName}</span>!
-        </h3>
-      </div>
-      <div className="flex justify-end gap-4">
-        <div className="flex items-center bg-[#ffffff] p-2 gap-2 rounded-xl w-64 shadow-md">
-          <Image src="/search.png" alt="search" width={30} height={30} />
-          <input type="search" placeholder="Search" className="p-2 outline-none" />
+      <div className="hidden w-full lg:flex gap-4 lg:justify-between items-center xl:flex xl:justify-between">
+        <div>
+          <h3 className="font-semibold lg:text-4xl">
+            Welcome <span className="text-[#1E59CF]">{firstName}</span>!
+          </h3>
         </div>
-        <div className="flex items-center">
-          <Image src="/icons.png" alt="notifications" width={30} height={30} />
-        </div>
-        <div className="flex gap-2 items-center border px-3 py-1 rounded-xl">
-          <div className="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full text-white font-bold text-lg">
-            {fullNamePrefix}
+        <div className="flex justify-end gap-4">
+          <div className="flex items-center bg-[#ffffff] p-2 gap-2 rounded-xl w-64 shadow-md">
+            <Image src="/search.png" alt="search" width={30} height={30} />
+            <input
+              type="search"
+              placeholder="Search"
+              className="p-2 outline-none"
+            />
           </div>
-          <p className="text-[#03021B80] text-lg font-semibold">{fullName}</p>
+          <div className="flex items-center">
+            <Image
+              src="/icons.png"
+              alt="notifications"
+              width={30}
+              height={30}
+            />
+          </div>
+          <div className="flex gap-2 items-center border px-3 py-1 rounded-xl">
+            <div className="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full text-white font-bold text-lg">
+              {fullNamePrefix}
+            </div>
+            <p className="text-[#03021B80] text-lg font-semibold">
+              {firstName}
+            </p>
+          </div>
         </div>
       </div>
 
       {isOpen && (
         <div className="absolute top-full left-0 w-full bg-[#FDFDFD] shadow-md z-10">
-          <div className="flex flex-col items-center gap-4 p-4">
-            <Link
-              href={`${basePath}`}
-              className={router.pathname === `${basePath}` ? activeStyle : linkStyle}
-            >
-              <div className="flex flex-col gap-2 items-center justify-center p-2">
-                <Image src="/dashboard.png" alt="logo" width={30} height={30} />
-                <p className="font-semibold text-lg">Dashboard</p>
+          <div className="lg:hidden fixed top-24 left-0 w-full bg-[#FDFDFD] shadow-md z-10">
+            {isOpen && (
+              <div className="flex flex-col items-center gap-4 p-4">
+                <Link
+                  href={`${basePath}`}
+                  className={
+                    router.pathname === `${basePath}` ? activeStyle : linkStyle
+                  }
+                >
+                  <div className={styles.menuIcon}>
+                    <div className="text-gray-400 mb-3">
+                      <MdDashboard size={30} />
+                    </div>
+                    <p className={styles.iconTitle}>Dashboard</p>
+                  </div>
+                </Link>
+                <Link
+                  href={`${basePath}/sessions`}
+                  className={
+                    router.pathname === `${basePath}/sessions`
+                      ? activeStyle
+                      : linkStyle
+                  }
+                >
+                  <div className={styles.menuIcon}>
+                    <div className="text-gray-400 mb-3">
+                      <FaCalendar size={30} />
+                    </div>
+                    <p className={styles.iconTitle}>Sessions</p>
+                  </div>
+                </Link>
+                <Link
+                  href={`${basePath}/messages`}
+                  className={
+                    router.pathname === `${basePath}/messages`
+                      ? activeStyle
+                      : linkStyle
+                  }
+                >
+                  <div className={styles.menuIcon}>
+                    <div className="text-gray-400 mb-3">
+                      <FaEnvelope size={30} />
+                    </div>
+                    <p className={styles.iconTitle}>Messages</p>
+                  </div>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="flex gap-2 items-center justify-center p-2"
+                >
+                  <div className={styles.menuIcon}>
+                    <div className="text-gray-400 mb-3">
+                      <FaSignOutAlt size={30} color="red" />
+                    </div>
+                    <p className={styles.iconTitle}>Logout</p>
+                  </div>
+                </button>
+                <div className="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full text-white font-bold text-lg">
+                  {fullNamePrefix}
+                </div>
               </div>
-            </Link>
-            <Link
-              href={`${basePath}/sessions`}
-              className={router.pathname === `${basePath}/sessions` ? activeStyle : linkStyle}
-            >
-              <div className="flex flex-col gap-2 items-center justify-center p-2">
-                <Image src="/sessions.png" alt="logo" width={30} height={30} />
-                <p className="font-semibold text-lg">Sessions</p>
-              </div>
-            </Link>
-            <Link
-              href={`${basePath}/messages`}
-              className={router.pathname === `${basePath}/messages` ? activeStyle : linkStyle}
-            >
-              <div className="flex flex-col gap-2 items-center justify-center p-2">
-                <Image src="/messages.png" alt="logo" width={30} height={30} />
-                <p className="font-semibold text-lg">Messages</p>
-              </div>
-            </Link>
-            <button onClick={handleLogout} className="flex gap-2 items-center justify-center p-2">
-              <Image src="/logout.png" alt="logo" width={30} height={30} />
-              <p className="text-[#03021B66] font-semibold text-lg">Log out</p>
-            </button>
+            )}
           </div>
         </div>
       )}
