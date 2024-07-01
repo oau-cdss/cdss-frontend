@@ -89,7 +89,7 @@ function Sidebar({ isDropdownOpen }) {
         >
           <div className={styles.menuIcon}>
             <div className="text-gray-400 mb-3">
-              <FaSignOutAlt size={30} />
+              <FaSignOutAlt size={30} color="red" />
             </div>
             <p className={styles.iconTitle}>Logout</p>
           </div>
@@ -152,7 +152,7 @@ function Sidebar({ isDropdownOpen }) {
             >
               <div className={styles.menuIcon}>
                 <div className="text-gray-400 mb-3">
-                  <FaSignOutAlt size={30} />
+                  <FaSignOutAlt size={30} color="red" />
                 </div>
                 <p className={styles.iconTitle}>Logout</p>
               </div>
