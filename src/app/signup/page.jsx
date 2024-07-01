@@ -1,58 +1,61 @@
-"use client"
+"use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import Link from "next/link";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import styles from "./signup.module.css";
+import { useState } from "react";
 
 const SignUp = () => {
-    const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [role, setRole] = useState("");
     const [message, setMessage] = useState("");
 
-    const handleRoleChange = (e) => {
-        setRole(e.target.value.toUpperCase()); // Convert role to uppercase
-    };
+    const validationSchema = Yup.object({
+        fullName: Yup.string().required("Full name is required"),
+        email: Yup.string().email("Invalid email address").required("Email is required"),
+        password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
+        role: Yup.string().oneOf(["PATIENT", "CLINICIAN", "ADMIN"], "Invalid role").required("Role is required"),
+    });
 
-    const signupSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('https://cdss-api.fly.dev/v1/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, fullName, role, password }),
-            });
-            if (response.status === 200) {
-                const data = await response.json();
-    
-                
-                if (typeof window !== 'undefined') {
-                    // Code accessing localStorage
-                    localStorage.setItem('userRole', role);
-                    localStorage.setItem('fullName', fullName);
-                  }
-                  
-                
+    const formik = useFormik({
+        initialValues: {
+            fullName: "",
+            email: "",
+            password: "",
+            role: "",
+        },
+        validationSchema,
+        onSubmit: async (values, { setSubmitting, setFieldError }) => {
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_ROOT_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(values),
+                });
+                if (response.status === 200) {
+                    const data = await response.json();
 
-                // Handle successful signup, e.g., redirect to dashboard
-                window.location.href = "/login";
-            } else {
-                const errorMessage = await response.text();
-                // alert(errorMessage)
-                const beginningSlice = errorMessage.slice(12, -1); 
-                const endSlice = beginningSlice.slice(0, -2)
-                setMessage(endSlice);
+                    if (typeof window !== 'undefined') {
+                        localStorage.setItem('userRole', values.role);
+                        localStorage.setItem('fullName', values.fullName);
+                    }
+
+                    window.location.href = "/login";
+                } else {
+                    const errorMessage = await response.text();
+                    const beginningSlice = errorMessage.slice(12, -1); 
+                    const endSlice = beginningSlice.slice(0, -2)
+                    setMessage(endSlice);
+                }
+            } catch (error) {
+                console.error('Error', error);
+            } finally {
+                setSubmitting(false);
             }
-        } catch (error) {
-            console.error('Error', error);
-            alert(error);
-           
-        }
-    };
+        },
+    });
 
     return (
         <div className={styles.signupContainer}>
@@ -79,70 +82,78 @@ const SignUp = () => {
                         </p>
                     </div>
 
-                    <form onSubmit={signupSubmit} className={styles.form}>
-                        <label className={styles.labelInput}>Full Name <br/>
-                            <input 
-                                type="text" 
+                    <form onSubmit={formik.handleSubmit} className={styles.form}>
+                        <div className="text-red-600">
+                            <p>{message}</p>
+                        </div>
+                        <label className={styles.labelInput}>
+                            Full Name <br/>
+                            <input
+                                type="text"
                                 placeholder="Enter your full name"
                                 className={styles.inputBox}
-                                value={fullName}
-                                onChange={(e) => setFullName(e.target.value)}
+                                {...formik.getFieldProps('fullName')}
                             />
+                            {formik.touched.fullName && formik.errors.fullName ? (
+                                <div className="text-red-600 text-base">{formik.errors.fullName}</div>
+                            ) : null}
                         </label>
 
-                        {/* <label className={styles.labelInput}>Last Name <br/>
-                            <input 
-                                type="text" 
-                                placeholder="Enter your Last name"
-                                className={styles.inputBox}
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-                        </label> */}
-
-
-                        <label className={styles.labelInput}>Email <br/>
-                        <p className="text-red-600 text-sm">{message}</p>
-                            <input 
-                                type="text" 
+                        <label className={styles.labelInput}>
+                            Email <br/>
+                            <input
+                                type="text"
                                 placeholder="Enter your email"
                                 className={styles.inputBox}
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                {...formik.getFieldProps('email')}
                             />
+                            {formik.touched.email && formik.errors.email ? (
+                                <div className="text-red-600 text-base">{formik.errors.email}</div>
+                            ) : null}
                         </label>
 
-                        <label className={styles.labelInput}>Password  <br/>
-                            <input 
-                                type="password" 
+                        <label className={styles.labelInput}>
+                            Password <br/>
+                            <input
+                                type="password"
                                 placeholder="Create a password"
                                 className={styles.inputBox}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                {...formik.getFieldProps('password')}
                             />
+                            {formik.touched.password && formik.errors.password ? (
+                                <div className="text-red-600 text-base">{formik.errors.password}</div>
+                            ) : null}
                         </label>
 
                         <label className={styles.role}>
                             Role <br/>
-                            <select className={styles.rolebox} value={role} onChange={handleRoleChange}>
-                                <option></option>
+                            <select
+                                className={styles.rolebox}
+                                {...formik.getFieldProps('role')}
+                            >
+                                <option value="">Select a role</option>
                                 <option value="PATIENT">Patient</option>
                                 <option value="CLINICIAN">Clinician</option>
-                                <option value="ADMIN">Admin</option> {/* Change "admin" to "ADMIN" */}
+                                <option value="ADMIN">Admin</option>
                             </select>
+                            {formik.touched.role && formik.errors.role ? (
+                                <div className="text-red-600 text-base">{formik.errors.role}</div>
+                            ) : null}
                         </label>
 
-                        <button className={styles.signinBtn}>Create an account</button>
+                       
+
+                        <button type="submit" className={styles.signinBtn} disabled={formik.isSubmitting}>
+                            Create an account
+                        </button>
                     </form>
 
                     <div className={styles.signUpAcc}>
                         <p>Already have an account? 
-
-                        <Link href="login" className={styles.signUp}> Log in</Link>
+                            <Link href="login" className={styles.signUp}> Log in</Link>
                         </p>
                     </div>
                 </div>
-              
             </div>
         </div>
     );

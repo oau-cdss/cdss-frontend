@@ -1,67 +1,79 @@
-"use client"
+"use client";
+
 import Image from "next/image";
 import styles from "./login.module.css";
-import { useState } from "react";
 import Link from "next/link";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { CgDanger } from "react-icons/cg";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("");
+    const validationSchema = Yup.object({
+        email: Yup.string().email("Invalid email address").required("Email is required"),
+        password: Yup.string().required("Password is required"),
+    });
 
-    const loginSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('https://cdss-api.fly.dev/v1/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+    const formik = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
+        },
+        validationSchema,
+        onSubmit: async (values, { setSubmitting, setFieldError }) => {
+            const token = localStorage.getItem('authToken');
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_ROOT_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, 
+                    },
+                    body: JSON.stringify(values),
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-    
+                if (response.ok) {
+                    const data = await response.json();
 
-                if (data && data.payload && data.payload.user) {
-                    const token = data.payload.token;
-                    const fullName = data.payload.user.fullName;
-                    const userRole = data.payload.user.role;
+                    if (data && data.payload && data.payload.user) {
+                        const token = data.payload.token;
+                        const fullName = data.payload.user.fullName;
+                        const userRole = data.payload.user.role;
 
-                    localStorage.setItem("authToken", token);
-                    localStorage.setItem("fullName", fullName);
-                    localStorage.setItem("userRole", userRole);
+                        localStorage.setItem("authToken", token);
+                        localStorage.setItem("fullName", fullName);
+                        localStorage.setItem("userRole", userRole);
 
-                    // Handle successful login
-                    switch (userRole) {
-                        case 'PATIENT':
-                            window.location.href = '/patient-dashboard';
-                            break;
-                        case 'ADMIN':
-                            window.location.href = '/admin-dashboard';
-                            break;
-                        case 'CLINICIAN':
-                            window.location.href = '/clinician-dashboard';
-                            break;
-                        default:
-                            window.location.href = '/';
-                            break;
+                        
+                        switch (userRole) {
+                            case 'PATIENT':
+                                window.location.href = '/patient-dashboard';
+                                break;
+                            case 'ADMIN':
+                                window.location.href = '/admin-dashboard';
+                                break;
+                            case 'CLINICIAN':
+                                window.location.href = '/clinician-dashboard';
+                                break;
+                            default:
+                                window.location.href = '/';
+                                break;
+                        }
+                    } else {
+                        setFieldError('general', "Invalid response structure from the server.");
+                        console.error('Invalid response structure:', data)
                     }
                 } else {
-                    setMessage("Invalid response structure from the server.");
-                    console.error('Invalid response structure:', data)
+                    const errorMessage = await response.text();
+                    setFieldError('general', errorMessage.slice(12, -3));
                 }
-            } else {
-                const errorMessage = await response.text();
-                setMessage(errorMessage.slice(12, -2));
+            } catch (error) {
+                console.error('Error', error);
+                setFieldError('general', 'An unexpected error occurred. Please try again.');
+            } finally {
+                setSubmitting(false);
             }
-        } catch (error) {
-            console.error('Error', error);
-            setMessage('An unexpected error occurred. Please try again.');
-        }
-    };
+        },
+    });
 
     return (
         <div className={styles.loginContainer}>
@@ -83,11 +95,11 @@ const Login = () => {
                         <p className={styles.loginText}>Welcome back! Please enter your details.</p>
                     </div>
 
-                    <form onSubmit={loginSubmit} className={styles.form}>
-                        {message && (
+                    <form onSubmit={formik.handleSubmit} className={styles.form}>
+                        {formik.errors.general && (
                             <div className="flex items-center text-red-600 mb-3">
                                 <CgDanger size={25} />
-                                <p className="ml-2 text-base">{message}</p>
+                                <p className="ml-2 text-base">{formik.errors.general}</p>
                             </div>
                         )}
 
@@ -97,10 +109,12 @@ const Login = () => {
                                 type="text"
                                 placeholder="user@gmail.com"
                                 className={styles.inputBox}
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                {...formik.getFieldProps('email')}
                                 aria-label="Email"
                             />
+                            {formik.touched.email && formik.errors.email ? (
+                                <div className="text-red-600 text-base">{formik.errors.email}</div>
+                            ) : null}
                         </label>
 
                         <label className={styles.labelInput}>
@@ -109,10 +123,12 @@ const Login = () => {
                                 type="password"
                                 placeholder="Password"
                                 className={styles.inputBox}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                {...formik.getFieldProps('password')}
                                 aria-label="Password"
                             />
+                            {formik.touched.password && formik.errors.password ? (
+                                <div className="text-red-600 text-base">{formik.errors.password}</div>
+                            ) : null}
                         </label>
 
                         <div className={styles.passwordContainer}>
@@ -126,7 +142,9 @@ const Login = () => {
                             </div>
                         </div>
 
-                        <button type="submit" className={styles.signinBtn}>Sign in</button>
+                        <button type="submit" className={styles.signinBtn} disabled={formik.isSubmitting}>
+                            Sign in
+                        </button>
                     </form>
 
                     <div className={styles.signUpAcc}>

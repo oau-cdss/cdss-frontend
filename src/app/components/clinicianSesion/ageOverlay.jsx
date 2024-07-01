@@ -1,10 +1,10 @@
 "use client"
-import { useSession } from "../../../context/sessionContext";
+import { useSchedule } from "../../../context/ScheduleContext";
 import Overlay from "./overlay";
 
 const AgeOverlay = () => {
    // const { permissionBtn, editPermission, selectedHour, setSelectedHour, setSaveSelectedHour, successNotification, setSuccessNotification } = useSettings();
-   const {startSession, setStartSession} = useSession
+   const {startSession, setStartSession} = useSchedule
    ()
 
     return (

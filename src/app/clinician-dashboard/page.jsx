@@ -3,16 +3,22 @@
 import React from 'react';
 import ClinicianSideBar from '../components/ClinicianDashboardComponents/clinicianSideBar';
 import ClinicianNavbar from '../components/ClinicianDashboardComponents/clinicianNavbar';
-import FiguresComponent from '../components/ClinicianDashboardComponents/figuresComponent';
+import FiguresComponent from '../components/ClinicianDashboardComponents/FiguresComponent';
 import SessionComponent from '../components/ClinicianDashboardComponents/sessionComponent';
-import UpcomingSchedule from '../components/ClinicianDashboardComponents/upcomingSchedule';
+import UpcomingSchedule from '../components/ClinicianDashboardComponents/upcomingschedule';
 import Calendar from '../components/ClinicianDashboardComponents/calendar';
 import ScheduleList from '../components/ClinicianDashboardComponents/scheduleList';
+import { ScheduleProvider } from '../../context/scheduleContext';
 import { SessionProvider } from '../../context/sessionContext';
 
 function ClinicianDashboard() {
+ 
+ 
+
   return (
-  <SessionProvider>
+  <ScheduleProvider>
+    <SessionProvider>
+
       <div className='flex lg:grid grid-cols-6'>
         <ClinicianSideBar />
         <div className='px-2 lg:px-7 col-span-5'>
@@ -34,7 +40,8 @@ function ClinicianDashboard() {
           </div>
         </div>
       </div>
-      </SessionProvider>
+    </SessionProvider>
+      </ScheduleProvider>
   );
 }
 

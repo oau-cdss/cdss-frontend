@@ -14,7 +14,6 @@ const ReviewsCarouselControl = (props) => {
         onClick={() => {
           if (props.canScrollPrev) {
             props.onPrev();
-            alert("hello")
           }
         }}
         disabled={!props.canScrollPrev}
@@ -30,7 +29,6 @@ const ReviewsCarouselControl = (props) => {
         onClick={() => {
           if (props.canScrollNext) {
             props.onNext();
-            alert("next")
           }
         }}
         disabled={!props.canScrollNext}

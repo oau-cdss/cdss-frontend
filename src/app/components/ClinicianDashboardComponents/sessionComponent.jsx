@@ -1,7 +1,12 @@
+"use client"
 import Link from 'next/link.js';
 import SessionDiv from './sessionDiv.jsx';
+import { useSchedule } from '../../../context/scheduleContext.jsx';
+import SessionDivSkeletonLoader from '../LoadingPhase/sessionDivSkeletonLoader.jsx';
 
 const SessionComponent = () => {
+    const { supportedRegionList,loading } = useSchedule();
+   
     return (
 
         <div className="bg-gray-100  p-5 rounded-lg">
@@ -12,10 +17,21 @@ const SessionComponent = () => {
                 <p className='text-[#1e59cf] underline text-base font-semibold'>See more</p>
                 </Link>
             </div>
+            
+
+         
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-y-3 gap-x-6'>
-            <SessionDiv img="/leg.png" alt="Tendinitis" title="Tendinitis"/>
-            <SessionDiv img="/hand.png" alt="carpal tunnel syndrome" title="carpal tunnel syndrome"/>
-            <SessionDiv img="/knee.png" alt="Osteoarthritis" title="Osteoarthritis"/>
+            { loading ? 
+            (
+                <SessionDivSkeletonLoader count={3}/>
+
+            ) : (
+            
+                                supportedRegionList.slice(0, 3).map((list, i) => (
+                                    <SessionDiv key={i} img={list.iconUrl} altTitle={list.name} title={list.name} regionId={list.id}/>
+                                ))
+                            
+                        )}
             </div>
         </div>
     )

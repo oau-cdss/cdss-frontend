@@ -2,87 +2,134 @@
 
 import React, { createContext, useContext, useState } from "react";
 
-// Create a context for the session state
 const SessionContext = createContext();
 
-// Provider component to wrap around the parts of your app that need access to the session state
 export const SessionProvider = ({ children }) => {
-    const [startSession, setStartSession] = useState(false);
-    const [illnessType, setIllnessType] = useState("Suspected Arthritis");
-    const [selectedDate, setSelectedDate] = useState("");
-    const [selectedMonth, setSelectedMonth] = useState("");
-    const [selectedYear, setSelectedYear] = useState("");
-    const [selectedTime, setSelectedTime] = useState("");
-    const [message, setMessage] = useState("");
-    const [steps, setSteps] = useState(1);
-    const [supportedRegionList, setSupportedRegionList] = useState([])
-    const [sessionList, setSessionList] = useState([])
+  const [sessionList, setSessionList] = useState([]);
+  const [patientList, setPatientList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [id, setId] = useState('');
+  const [status, setStatus] = useState('');
+  const [patientEmail, setPatientEmail] = useState('');
+  const [clinicianId, setClinicianId] = useState('');
+  const [continueSession, setContinueSession] = useState(false);
+  const [sessionId, setSessionId] = useState("");
+  const [currentSessionId, setCurrentSessionId] = useState("");
+  const [sessionQuestions, setSessionQuestions] = useState(" ");
+  const [patientInitials, setPatientInitials] = useState("");
+  const [patientName, setPatientName] = useState("");
+  const [currentRegion, setCurrentRegion] = useState("")
+  const  [regionImage, setRegionImage] = useState("")
 
-    const patientId = "6615912a967614ccf6f995b0";
-    const scheduledTime = `${selectedYear}-${selectedMonth}-${selectedDate}T${selectedTime}`;
+   //Fetch List Of Sessions
+    const listOfSessions = async () => {
+      const url = new URL(`${process.env.NEXT_PUBLIC_ROOT_URL}/sessions/list`);
+      const token = localStorage.getItem('authToken');
 
-    const ScheduleSession = async () => {
-        const token = localStorage.getItem('authToken');
-        const payload = { patientId, type: illnessType, scheduledTime };
-
-        console.log("Payload to be sent:", payload);
-
-        try {
-            const response = await fetch('https://cdss-api.fly.dev/v1/sessions/schedule', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify(payload),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log('API response data:', data);
-
-                if (data && data.payload && data.payload.clinician) {
-                    const type = data.payload.type;
-                    const fullName = data.payload.clinician.fullName;
-                    const scheduledTime = data.payload.scheduledTime;
-                    alert(`Type: ${type}\nClinician: ${fullName}\nScheduled Time: ${scheduledTime}`);
-                } else {
-                    setMessage("Invalid response structure from the server.");
-                    console.error('Invalid response structure:', data);
-                }
-            } else {
-                const errorMessage = await response.text();
-                setMessage(errorMessage.slice(12, -2));
-            }
-        } catch (error) {
-            console.error('Error', error);
-            setMessage('An unexpected error occurred. Please try again.');
+      const params = { page, id, status, patientEmail, clinicianId };
+      Object.keys(params).forEach(key => {
+        if (params[key]) {
+          url.searchParams.append(key, params[key]);
         }
+      });
+
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setSessionList(data.payload.sessions);
+          setCurrentSessionId(data.payload.id);
+
+          
+          if (data.payload.sessions.length > 0) {
+            setPatientName(data.payload.sessions[0].patient.fullName);
+          }
+        } else {
+          const errorData = await response.json();
+          console.error('Error:', errorData);
+        }
+      } catch (error) {
+        console.error('Error', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    return (
-        <SessionContext.Provider value={{
-            startSession, setStartSession,
-            illnessType, setIllnessType,
-            selectedDate, setSelectedDate,
-            selectedMonth, setSelectedMonth,
-            selectedYear, setSelectedYear,
-            selectedTime, setSelectedTime,
-            message, ScheduleSession,
-            steps, setSteps,
-            supportedRegionList, setSupportedRegionList,
-            sessionList, setSessionList
-        }}>
-            {children}
-        </SessionContext.Provider>
-    );
+
+    //Fetch List Of Patients
+    const listOfPatients = async () => {
+      const url = new URL(`${process.env.NEXT_PUBLIC_ROOT_URL}/patients/list`);
+      const token = localStorage.getItem('authToken');
+
+      const params = { page, id };
+      Object.keys(params).forEach(key => {
+        if (params[key]) {
+          url.searchParams.append(key, params[key]);
+        }
+      });
+
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.payload);
+          setPatientList(data.payload.patients);
+        } else {
+          const errorData = await response.json();
+          console.error('Error:', errorData);
+        }
+      } catch (error) {
+        console.error('Error', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    
+
+  return (
+    <SessionContext.Provider value={{
+      page, setPage, id, setId,
+      status, setStatus, patientEmail, setPatientEmail,
+      patientList, setPatientList,
+      clinicianId, setClinicianId,
+      loading, setLoading,
+      sessionList, setSessionList,
+      continueSession, setContinueSession,
+      sessionId, setSessionId,
+      currentSessionId, setCurrentSessionId,
+      sessionQuestions, setSessionQuestions,
+      patientInitials, setPatientInitials,
+      patientName, setPatientName,
+      listOfPatients, listOfSessions,
+      currentRegion, setCurrentRegion,
+      regionImage, setRegionImage
+
+    }}>
+      {children}
+    </SessionContext.Provider>
+  );
 };
 
-// Custom hook to use the session context
 export const useSession = () => {
-    const context = useContext(SessionContext);
-    if (!context) {
-        throw new Error("useSession must be used within a SessionProvider");
-    }
-    return context;
+  const context = useContext(SessionContext);
+  if (!context) {
+    throw new Error("useSession must be used within a SessionProvider");
+  }
+  return context;
 };

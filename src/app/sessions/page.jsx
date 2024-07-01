@@ -1,86 +1,73 @@
 "use client";
-
-import { SessionProvider, useSession } from "../../context/sessionContext";
+import React, { useEffect } from 'react';
+import { ScheduleProvider } from "../../context/scheduleContext";
 import ClinicianSideBar from "../components/ClinicianDashboardComponents/clinicianSideBar";
 import ClinicianNavbar from "../components/ClinicianDashboardComponents/clinicianNavbar";
 import ClinicianSessionsList from "../components/ClinicianDashboardComponents/ClinicianSessions/clinicianSessionsList";
-import { useEffect, useState } from "react";
+import SessionQuestion from "../components/ClinicianDashboardComponents/ClinicianSessions/sessionQuestions";
+import { useSession, SessionProvider } from '../../context/sessionContext';
+import SessionListSkeletonLoader from '../components/LoadingPhase/sessionListSkeleton';
 
-const Sessions = ({ page = 1, id = '', status = '', patientId = '', clinicianId = '' }) => {
-  const { sessionList, setSessionList } = useSession();
-  const [loading, setLoading] = useState(true);
-
-  const listOfSessions = async () => {
-    const url = new URL('https://cdss-api.fly.dev/v1/sessions/list');
-    const token = localStorage.getItem('authToken');
-
-    // Add query parameters to the URL
-    const params = { page, id, status, patientId, clinicianId };
-    Object.keys(params).forEach(key => {
-      if (params[key]) {
-        url.searchParams.append(key, params[key]);
-      }
-    });
-
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setSessionList(data.payload.sessions);
-      } else {
-        const errorData = await response.json();
-        console.error('Error:', errorData);
-        alert(`Error: ${errorData.message}`);
-      }
-    } catch (error) {
-      console.error('Error', error);
-      alert(`Error: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+const Sessions = () => {
+  const {
+    page, id, status, patientEmail, clinicianId, loading, sessionList, listOfSessions,
+    setSessionList, setLoading, setContinueSession, setCurrentSessionId, continueSession,
+    setPatientName, setCurrentRegion, currentRegion, regionImage, setRegionImage
+  } = useSession();
 
   useEffect(() => {
     listOfSessions();
-  }, [page, id, status, patientId, clinicianId]);  // Re-run the effect if any parameter changes
+  }, [listOfSessions, page, id, status, patientEmail, clinicianId, setLoading, setSessionList]);
+
+  const handleSessionClick = (session) => {
+    setPatientName(session.patient.fullName);
+    setContinueSession(true);
+    setCurrentSessionId(session.id);
+    setCurrentRegion(session.region.name);
+    setRegionImage(session.region.iconUrl);
+    localStorage.setItem("savedCurrentRegion", session.region.name);
+  };
 
   return (
     <div className="flex lg:grid grid-cols-6">
       <ClinicianSideBar />
-      <div className="px-2 lg:px-7 col-span-5">
-        <ClinicianNavbar />
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          <div>
-            {sessionList.map((session, i) => (
-              <ClinicianSessionsList
-                key={session.id}
-                img="/leg.png"
-                alt={session.type}
-                type={session.type}
-                sessionDate={session.scheduledTime}
-                patientName={session.patient.fullName}
-              />
-            ))}
-          </div>
-        )}
+      <div className="col-span-5 overflow-y-scroll">
+        <ClinicianNavbar currentRegion={currentRegion} />
+        <div className="px-6 py-6">
+          {loading ? (
+             <SessionListSkeletonLoader count={5}/>
+          ) : (
+            <div className="bg-gray-100 grid grid-cols-1 place-items-center gap-y-6 bg-[#0f0f0f0]">
+              {continueSession ? (
+                <SessionQuestion />
+              ) : (
+                sessionList.map((session) => (
+                  <ClinicianSessionsList
+                    key={session.id}
+                    img={session.region.iconUrl}
+                    alt={session.type}
+                    type={session.type}
+                    sessionDate={session.scheduledTime}
+                    patientName={session.patient.fullName}
+                    status={session.status}
+                    onClick={() => handleSessionClick(session)}
+                  />
+                ))
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 const SessionWithProvider = () => (
-  <SessionProvider>
-    <Sessions />
-  </SessionProvider>
+  <ScheduleProvider>
+    <SessionProvider>
+      <Sessions />
+    </SessionProvider>
+  </ScheduleProvider>
 );
 
 export default SessionWithProvider;
