@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 import styles from "./../../components/ClinicianDashboardComponents/ClinicianComponents.module.css";
 import { FaCalendar, FaEnvelope, FaSignOutAlt } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
-
+import icon from '../component/Icons.png'
+  
 function Header({ isDropdownOpen }) {
   const [fullNamePrefix, setFullNamePrefix] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -93,7 +94,7 @@ function Header({ isDropdownOpen }) {
           </div>
           <div className="flex items-center">
             <Image
-              src="/icons.png"
+              src={icon}
               alt="notifications"
               width={30}
               height={30}
