@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import { FiInfo } from "react-icons/fi";
-import { useSession } from "../../../../context/sessionContext";
 import { format } from "date-fns";
 
 const ClinicianSessionsList = ({ img, altTitle, type,  sessionDate, patientName, status, onClick}) => {
-    const { setContinueSession, sessionId,  setCurrentSessionId} = useSession()
+   
    
     const formattedDate = format(sessionDate, "MMMM dd, yyyy");
     const formattedTime = format(sessionDate, "h:mm a");

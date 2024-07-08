@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import { useSession } from "../../../context/sessionContext";
+import { useSchedule } from "../../../context/scheduleContext";
 import UpcomingScheduleComponent from "./upcomingScheduleComponent";
 import UpcomingScheduleSkeletonLoader from "../LoadingPhase/upcomingScheduleSkeleton";
 
 const ScheduleList = () => {
-    const { sessionList, listOfSessions, loading  } = useSession();
+    const { sessionList, listOfSessions, loading  } = useSchedule();
 
     useEffect(() => {
         listOfSessions();

@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { FaBell } from "react-icons/fa";
-import { useSession } from '../../../context/sessionContext';
+import { useSchedule } from '../../../context/scheduleContext';
 
 const ClinicianNavbar = ({ currentRegion }) => {
-    const { continueSession } = useSession();
+    const { continueSession } = useSchedule();
     const [firstName, setFirstName] = useState('');
     const [nameInitials, setNameInitials] = useState('');
     const [savedCurrentRegion, setSavedCurrentRegion] = useState('');

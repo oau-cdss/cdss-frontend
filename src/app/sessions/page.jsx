@@ -1,23 +1,26 @@
 "use client";
 import React, { useEffect } from 'react';
-import { ScheduleProvider } from "../../context/scheduleContext";
 import ClinicianSideBar from "../components/ClinicianDashboardComponents/clinicianSideBar";
 import ClinicianNavbar from "../components/ClinicianDashboardComponents/clinicianNavbar";
 import ClinicianSessionsList from "../components/ClinicianDashboardComponents/ClinicianSessions/clinicianSessionsList";
 import SessionQuestion from "../components/ClinicianDashboardComponents/ClinicianSessions/sessionQuestions";
-import { useSession, SessionProvider } from '../../context/sessionContext';
+import { useSchedule, ScheduleProvider } from '../../context/scheduleContext';
 import SessionListSkeletonLoader from '../components/LoadingPhase/sessionListSkeleton';
 
 const Sessions = () => {
   const {
     page, id, status, patientEmail, clinicianId, loading, sessionList, listOfSessions,
     setSessionList, setLoading, setContinueSession, setCurrentSessionId, continueSession,
-    setPatientName, setCurrentRegion, currentRegion, regionImage, setRegionImage
-  } = useSession();
+    setPatientName, setCurrentRegion, currentRegion, regionImage, setRegionImage, supportedRegionList
+  } = useSchedule();
+
+
+
+  
 
   useEffect(() => {
     listOfSessions();
-  }, [listOfSessions, page, id, status, patientEmail, clinicianId, setLoading, setSessionList]);
+  }, [listOfSessions]);
 
   const handleSessionClick = (session) => {
     setPatientName(session.patient.fullName);
@@ -64,9 +67,9 @@ const Sessions = () => {
 
 const SessionWithProvider = () => (
   <ScheduleProvider>
-    <SessionProvider>
+  
       <Sessions />
-    </SessionProvider>
+   
   </ScheduleProvider>
 );
 

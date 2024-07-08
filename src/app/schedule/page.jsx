@@ -1,15 +1,22 @@
 "use client";
 
-import { useSchedule, ScheduleProvider } from "../../context/scheduleContext";
 import SessionDiv from "../components/ClinicianDashboardComponents/sessionDiv";
 import ScheduleSessionOverlay from "../components/sessionsOverlay/scheduleSessionOverlay";
 import ClinicianSideBar from "../components/ClinicianDashboardComponents/clinicianSideBar";
 import ClinicianNavbar from "../components/ClinicianDashboardComponents/clinicianNavbar";
 import SessionDivSkeletonLoader from "../components/LoadingPhase/sessionDivSkeletonLoader";
-import { SessionProvider } from "../../context/sessionContext";
+import { SessionProvider, useSession } from "../../context/sessionContext";
+import { useEffect } from "react";
+import { ScheduleProvider } from "../../context/scheduleContext";
 
 const Schedule = () => {
-  const { supportedRegionList, loading } = useSchedule();
+  const { supportedRegionList, loading, listOfSupportedRegions } = useSession();
+
+  useEffect(() => {
+    if (supportedRegionList.length === 0) {
+      listOfSupportedRegions();
+    }
+  }, [supportedRegionList, listOfSupportedRegions]);
 
   return (
     <div className='flex lg:grid grid-cols-6'>
@@ -42,9 +49,10 @@ const Schedule = () => {
 
 const ScheduleWithProvider = () => (
   <ScheduleProvider>
-    <SessionProvider>
-      <Schedule />
-    </SessionProvider>
+
+  <SessionProvider>
+    <Schedule />
+  </SessionProvider>
   </ScheduleProvider>
 );
 

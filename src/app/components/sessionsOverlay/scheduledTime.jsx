@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { useSchedule } from '../../../context/scheduleContext';
+import { useSession } from '../../../context/sessionContext';
 import { CgDanger } from "react-icons/cg";
 
 const ScheduledTime = () => {
@@ -11,7 +11,7 @@ const ScheduledTime = () => {
         selectedTime, setSelectedTime,
         patientEmail, scheduledTime, illnessType, regionId,
         setSuccessfulSchedule, message, setMessage, setSteps
-    } = useSchedule();
+    } = useSession();
 
     const dates = [...Array(31).keys()].map(i => i + 1);
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -77,6 +77,7 @@ const ScheduledTime = () => {
                                 value={selectedDate}
                                 onChange={(e) => setSelectedDate(e.target.value)}
                             >
+                                <option value="" disabled>Select Date</option>
                                 {dates.map((date) => (
                                     <option key={date} value={String(date).padStart(2, '0')}>{date < 10 ? "0" + date : date}</option>
                                 ))}
@@ -90,10 +91,9 @@ const ScheduledTime = () => {
                                 aria-label="Select Month"
                                 className="w-full h-[40px] border border-gray-300 focus:outline-none rounded-md py-2 px-4"
                                 value={selectedMonth}
-                                onChange={(e) => {
-                                    setSelectedMonth(e.target.value);
-                                }}
+                                onChange={(e) => setSelectedMonth(e.target.value)}
                             >
+                                <option value="" disabled>Select Month</option>
                                 {months.map((month, index) => (
                                     <option key={index} value={String(index + 1).padStart(2, '0')}>{month}</option>
                                 ))}
@@ -109,6 +109,7 @@ const ScheduledTime = () => {
                                 value={selectedYear}
                                 onChange={(e) => setSelectedYear(e.target.value)}
                             >
+                                <option value="" disabled>Select Year</option>
                                 {years.map((year) => (
                                     <option key={year} value={year}>{year}</option>
                                 ))}

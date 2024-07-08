@@ -8,16 +8,16 @@ import SessionComponent from '../components/ClinicianDashboardComponents/session
 import UpcomingSchedule from '../components/ClinicianDashboardComponents/upcomingschedule';
 import Calendar from '../components/ClinicianDashboardComponents/calendar';
 import ScheduleList from '../components/ClinicianDashboardComponents/scheduleList';
-import { ScheduleProvider } from '../../context/scheduleContext';
 import { SessionProvider } from '../../context/sessionContext';
+import { ScheduleProvider } from '../../context/scheduleContext';
 
 function ClinicianDashboard() {
  
  
 
   return (
-  <ScheduleProvider>
-    <SessionProvider>
+  <SessionProvider>
+    <ScheduleProvider>
 
       <div className='flex lg:grid grid-cols-6'>
         <ClinicianSideBar />
@@ -40,8 +40,8 @@ function ClinicianDashboard() {
           </div>
         </div>
       </div>
-    </SessionProvider>
-      </ScheduleProvider>
+    </ScheduleProvider>
+      </SessionProvider>
   );
 }
 

@@ -1,125 +1,84 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const SessionContext = createContext();
 
 export const SessionProvider = ({ children }) => {
-  const [sessionList, setSessionList] = useState([]);
-  const [patientList, setPatientList] = useState([]);
+  const [startSession, setStartSession] = useState(false);
+  const [illnessType, setIllnessType] = useState("Suspected Arthritis");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
+  const [message, setMessage] = useState("");
+  const [steps, setSteps] = useState(1);
+  const [supportedRegionList, setSupportedRegionList] = useState([]);
+  const [regionId, setRegionId] = useState("");
+  const [patientEmail, setPatientEmail] = useState("");
+  const [successfulSchedule, setSuccessfulSchedule] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [id, setId] = useState('');
-  const [status, setStatus] = useState('');
-  const [patientEmail, setPatientEmail] = useState('');
-  const [clinicianId, setClinicianId] = useState('');
-  const [continueSession, setContinueSession] = useState(false);
-  const [sessionId, setSessionId] = useState("");
-  const [currentSessionId, setCurrentSessionId] = useState("");
-  const [sessionQuestions, setSessionQuestions] = useState(" ");
-  const [patientInitials, setPatientInitials] = useState("");
-  const [patientName, setPatientName] = useState("");
-  const [currentRegion, setCurrentRegion] = useState("")
-  const  [regionImage, setRegionImage] = useState("")
 
-   //Fetch List Of Sessions
-    const listOfSessions = async () => {
-      const url = new URL(`${process.env.NEXT_PUBLIC_ROOT_URL}/sessions/list`);
-      const token = localStorage.getItem('authToken');
+  const formattedDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(selectedDate).padStart(2, '0')}`;
 
-      const params = { page, id, status, patientEmail, clinicianId };
-      Object.keys(params).forEach(key => {
-        if (params[key]) {
-          url.searchParams.append(key, params[key]);
-        }
+  const [hour, minute, second] = selectedTime.split(':');
+  const formattedTime = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second || '00').padStart(2, '0')}`;
+
+  const scheduledFormattedTime = new Date(`${formattedDate}T${formattedTime}`).toLocaleTimeString('en-GB', { hour12: false });
+  const scheduledTime = `${formattedDate}T${scheduledFormattedTime}`;
+
+  const listOfSupportedRegions = async () => {
+    const token = localStorage.getItem('authToken');
+
+    if (!token) {
+      console.error('No auth token found in localStorage');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_ROOT_URL}/questions/supported-regions`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
       });
 
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setSessionList(data.payload.sessions);
-          setCurrentSessionId(data.payload.id);
-
-          
-          if (data.payload.sessions.length > 0) {
-            setPatientName(data.payload.sessions[0].patient.fullName);
-          }
-        } else {
-          const errorData = await response.json();
-          console.error('Error:', errorData);
-        }
-      } catch (error) {
-        console.error('Error', error);
-      } finally {
-        setLoading(false);
+      if (response.ok) {
+        const data = await response.json();
+        setSupportedRegionList(data.payload.regions);
+      } else {
+        const errorData = await response.json();
+        setMessage(errorData.message);
       }
-    };
+    } catch (error) {
+      setMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-
-    //Fetch List Of Patients
-    const listOfPatients = async () => {
-      const url = new URL(`${process.env.NEXT_PUBLIC_ROOT_URL}/patients/list`);
-      const token = localStorage.getItem('authToken');
-
-      const params = { page, id };
-      Object.keys(params).forEach(key => {
-        if (params[key]) {
-          url.searchParams.append(key, params[key]);
-        }
-      });
-
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data.payload);
-          setPatientList(data.payload.patients);
-        } else {
-          const errorData = await response.json();
-          console.error('Error:', errorData);
-        }
-      } catch (error) {
-        console.error('Error', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    
+  useEffect(() => {
+    listOfSupportedRegions();
+  }, []);
 
   return (
     <SessionContext.Provider value={{
-      page, setPage, id, setId,
-      status, setStatus, patientEmail, setPatientEmail,
-      patientList, setPatientList,
-      clinicianId, setClinicianId,
+      startSession, setStartSession,
+      illnessType, setIllnessType,
+      selectedDate, setSelectedDate,
+      selectedMonth, setSelectedMonth,
+      selectedYear, setSelectedYear,
+      selectedTime, setSelectedTime,
+      message, setMessage,
+      steps, setSteps,
+      supportedRegionList, setSupportedRegionList,
+      regionId, setRegionId,
+      patientEmail, setPatientEmail,
+      successfulSchedule, setSuccessfulSchedule,
       loading, setLoading,
-      sessionList, setSessionList,
-      continueSession, setContinueSession,
-      sessionId, setSessionId,
-      currentSessionId, setCurrentSessionId,
-      sessionQuestions, setSessionQuestions,
-      patientInitials, setPatientInitials,
-      patientName, setPatientName,
-      listOfPatients, listOfSessions,
-      currentRegion, setCurrentRegion,
-      regionImage, setRegionImage
-
+      listOfSupportedRegions
     }}>
       {children}
     </SessionContext.Provider>
