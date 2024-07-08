@@ -1,4 +1,3 @@
-"use client";
 import React from 'react';
 import { useSession } from '../../../context/sessionContext';
 import { CgDanger } from "react-icons/cg";
@@ -19,6 +18,12 @@ const ScheduledTime = () => {
 
     const ScheduleSession = async () => {
         const token = localStorage.getItem('authToken');
+        
+        if (!scheduledTime) {
+            setMessage("Session scheduled time cannot be empty.");
+            return;
+        }
+
         const payload = { patientEmail, type: illnessType, scheduledTime, regionId };
 
         try {
@@ -47,11 +52,10 @@ const ScheduledTime = () => {
                 }
             } else {
                 const errorMessage = await response.text();
-                setMessage(errorMessage.slice(12, -2));
+                setMessage(errorMessage.slice(12, -3));
             }
         } catch (error) {
             console.error('Error', error);
-            
         }
     };
 
