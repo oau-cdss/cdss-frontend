@@ -5,11 +5,11 @@ import Reviews from "./components/reviews/reviews";
 import AboutCarousel from "./components/aboutCarousel/aboutCarousel";
 import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
-import {ScheduleProvider} from "../context/scheduleContext"
+import {SessionProvider} from "../context/sessionContext"
 
 export default function Home() {
   return (
-    <ScheduleProvider>
+    <SessionProvider>
 
     <div>
       <Navbar/>
@@ -19,6 +19,6 @@ export default function Home() {
       <Reviews />
       <Footer/>
     </div>
-    </ScheduleProvider>
+    </SessionProvider>
   );
 }

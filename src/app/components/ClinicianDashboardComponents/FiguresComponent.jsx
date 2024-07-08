@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useSession } from '../../../context/sessionContext';
+import { useSchedule } from '../../../context/scheduleContext';
 import FigureDiv from './figuresDiv'
 
 const FiguresComponent = () => {
-    const { sessionList, patientList , listOfPatients} = useSession()
+    const { sessionList, patientList , listOfPatients} = useSchedule()
     useEffect(() => {
         listOfPatients()
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSession } from "../../../../context/sessionContext";
+import { useSchedule } from "../../../../context/scheduleContext";
 import QuizSkeletonLoader from "../../LoadingPhase/quizSkeleton";
 
 const SessionQuestion = () => {
-  const { continueSession, currentSessionId } = useSession();
+  const { continueSession, currentSessionId } = useSchedule();
   const [loading, setLoading] = useState(true);
   const [questionKind, setQuestionKind] = useState("");
   const [options, setOptions] = useState([]);

@@ -2,11 +2,11 @@
 
 import React, { useEffect } from 'react';
 import { format } from "date-fns";
-import { useSession } from "../../../context/sessionContext";
+import { useSchedule } from "../../../context/scheduleContext";
 import Link from "next/link";
 
 const UpcomingScheduleComponent = ({ name, time }) => {
-    const { patientInitials, setPatientInitials } = useSession();
+    const { patientInitials, setPatientInitials } = useSchedule();
 
     useEffect(() => {
         const words = name.split(" ");

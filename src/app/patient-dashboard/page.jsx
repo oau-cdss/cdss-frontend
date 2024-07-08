@@ -21,7 +21,7 @@ function Patient() {
     <Sidebar isSidebarOpen={isSidebarOpen} />
   </div>
 
-  <div className="flex w-screen lg:w-[85%] xl:w-[85%]  flex-col h-full px-5">
+  <div className="flex w-full lg:w-[85%] xl:w-[85%]  flex-col h-full px-5">
     <Header isDropdownOpen={isDropdownOpen} />
     <Main />
   </div>

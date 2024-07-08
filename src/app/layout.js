@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ScheduleProvider } from "../context/scheduleContext";
+import { SessionProvider } from "../context/sessionContext";
 //const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
       {/* <body className={inter.className}> */}
       <body className="">
      
-      <ScheduleProvider>
+      <SessionProvider>
 
       <div className="container">
         <div className="wrapper">
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
       
         </div>
       </div>
-      </ScheduleProvider>
+      </SessionProvider>
      
         </body>
     </html>

@@ -1,11 +1,11 @@
 "use client"
 import Link from 'next/link.js';
 import SessionDiv from './sessionDiv.jsx';
-import { useSchedule } from '../../../context/scheduleContext.jsx';
+import { useSession } from '../../../context/sessionContext.jsx';
 import SessionDivSkeletonLoader from '../LoadingPhase/sessionDivSkeletonLoader.jsx';
 
 const SessionComponent = () => {
-    const { supportedRegionList,loading } = useSchedule();
+    const { supportedRegionList,loading } = useSession();
    
     return (
 
