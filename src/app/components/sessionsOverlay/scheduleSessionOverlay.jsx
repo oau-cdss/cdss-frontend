@@ -20,7 +20,10 @@ const ScheduleSessionOverlay = () => {
                     <div className="bg-[#ffff] py-8 pb-5 px-5 rounded-xl h-auto mx-3 w-full md:w-1/2 z-40">
                         <div 
                             className="flex justify-end items-end"
-                            onClick={() => setStartSession(false)}
+                            onClick={() => {
+                                setStartSession(false)
+                            setSteps(1)
+                        }}
                         >
                            <IoClose size={20}/>
                         </div>

@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const SessionContext = createContext();
@@ -19,13 +18,15 @@ export const SessionProvider = ({ children }) => {
   const [successfulSchedule, setSuccessfulSchedule] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const formattedDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(selectedDate).padStart(2, '0')}`;
+  const getFormattedDate = () => {
+    if (!selectedYear || !selectedMonth || !selectedDate || !selectedTime) return "";
+    const formattedDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${String(selectedDate).padStart(2, '0')}`;
+    const [hour, minute] = selectedTime.split(':');
+    const formattedTime = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`;
+    return `${formattedDate}T${formattedTime}`;
+  };
 
-  const [hour, minute, second] = selectedTime.split(':');
-  const formattedTime = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second || '00').padStart(2, '0')}`;
-
-  const scheduledFormattedTime = new Date(`${formattedDate}T${formattedTime}`).toLocaleTimeString('en-GB', { hour12: false });
-  const scheduledTime = `${formattedDate}T${scheduledFormattedTime}`;
+  const scheduledTime = getFormattedDate();
 
   const listOfSupportedRegions = async () => {
     const token = localStorage.getItem('authToken');
@@ -78,7 +79,8 @@ export const SessionProvider = ({ children }) => {
       patientEmail, setPatientEmail,
       successfulSchedule, setSuccessfulSchedule,
       loading, setLoading,
-      listOfSupportedRegions
+      scheduledTime,
+      listOfSupportedRegions // Expose the function in the context
     }}>
       {children}
     </SessionContext.Provider>
