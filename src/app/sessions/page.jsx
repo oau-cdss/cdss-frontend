@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect } from 'react';
+
+import React, { useEffect, useCallback } from 'react';
 import ClinicianSideBar from "../components/ClinicianDashboardComponents/clinicianSideBar";
 import ClinicianNavbar from "../components/ClinicianDashboardComponents/clinicianNavbar";
 import ClinicianSessionsList from "../components/ClinicianDashboardComponents/ClinicianSessions/clinicianSessionsList";
@@ -13,10 +14,6 @@ const Sessions = () => {
     setSessionList, setLoading, setContinueSession, setCurrentSessionId, continueSession,
     setPatientName, setCurrentRegion, currentRegion, regionImage, setRegionImage, supportedRegionList
   } = useSchedule();
-
-
-
-  
 
   useEffect(() => {
     listOfSessions();
@@ -67,9 +64,7 @@ const Sessions = () => {
 
 const SessionWithProvider = () => (
   <ScheduleProvider>
-  
-      <Sessions />
-   
+    <Sessions />
   </ScheduleProvider>
 );
 
