@@ -13,7 +13,7 @@ const SessionComponent = () => {
             <div className='flex justify-between items-center mb-5'>
                 <p className='text-gray-500 text-base'>Choose a session</p>
 
-                <Link href="/clinician-session">
+                <Link href="/schedule">
                 <p className='text-[#1e59cf] underline text-base font-semibold'>See more</p>
                 </Link>
             </div>

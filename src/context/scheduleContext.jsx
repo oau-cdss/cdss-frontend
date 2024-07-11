@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 
 const ScheduleContext = createContext();
 
@@ -23,7 +23,7 @@ export const ScheduleProvider = ({ children }) => {
   const [regionImage, setRegionImage] = useState("")
 
   // Fetch List Of Sessions
-  const listOfSessions = async () => {
+  const listOfSessions = useCallback(async () => {
     const url = new URL(`${process.env.NEXT_PUBLIC_ROOT_URL}/sessions/list`);
     const token = localStorage.getItem('authToken');
 
@@ -44,8 +44,7 @@ export const ScheduleProvider = ({ children }) => {
       });
 
       if (response.ok) {
-        const data = await response.json()
-        ;
+        const data = await response.json();
         setSessionList(data.payload.sessions);
         setCurrentSessionId(data.payload.id);
 
@@ -61,10 +60,10 @@ export const ScheduleProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, id, status, patientEmail, clinicianId]);
 
   // Fetch List Of Patients
-  const listOfPatients = async () => {
+  const listOfPatients = useCallback(async () => {
     const url = new URL(`${process.env.NEXT_PUBLIC_ROOT_URL}/patients/list`);
     const token = localStorage.getItem('authToken');
 
@@ -97,11 +96,11 @@ export const ScheduleProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, id]);
 
-  useEffect(() => {
-    listOfSessions();
-  }, [page, id, status, patientEmail, clinicianId]);
+  // useEffect(() => {
+  //   listOfSessions();
+  // }, [listOfSessions]);
 
   return (
     <ScheduleContext.Provider value={{
