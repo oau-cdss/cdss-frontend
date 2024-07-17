@@ -43,9 +43,15 @@ const SessionQuestion = () => {
           localStorage.setItem('currentSessionId', currentSessionId);
         } else {
           const errorData = await response.json();
+          if (errorData.message) {
+            setErrorMessage(errorData.message);
+          }
           console.error('Error:', errorData);
         }
       } catch (error) {
+        if (error.message) {
+          setErrorMessage(error.message);
+        }
         console.error('Error', error);
       } finally {
         setLoading(false);
@@ -115,10 +121,16 @@ const SessionQuestion = () => {
         setSelectedMcqOption("");
       } else {
         const errorData = await response.json();
+        if (errorData.message) {
+          setErrorMessage(errorData.message);
+        }
         console.error('Error:', errorData);
       }
     } catch (error) {
       console.error('Error', error);
+      if (error.message) {
+        setErrorMessage(error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -183,7 +195,7 @@ const SessionQuestion = () => {
 
               {
                 (() => {
-                  if (questionKind !== "CONCLUSION") {
+                  if (questionKind !== "CONCLUSION" && currentQuestion != '') {
                     return (
                     <div className="flex justify-between items-center mt-4">
                       <div className="flex flex-col items-center gap-y-2 text-gray-400">
