@@ -9,6 +9,7 @@ const SessionQuestion = () => {
   const [options, setOptions] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState("");
+  const [currentQuestionNumericId, setCurrentQuestionNumericId] = useState(0);
   const [selectedMcqOption, setSelectedMcqOption] = useState("");
   const [previousPromptAnswerText, setPreviousPromptAnswerText] = useState("");
   const [checkSelected, setCheckSelected] = useState(false);
@@ -31,7 +32,12 @@ const SessionQuestion = () => {
         if (response.ok) {
           const data = await response.json();
           setCurrentQuestion(data.payload.text);
-          setOptions(data.payload.options);
+          setCurrentQuestionNumericId(data.payload.numericId);
+          if (data.payload.options) {
+            // sort the options using data.payload.options.label
+            data.payload.options.sort((a, b) => a.label.localeCompare(b.label))
+            setOptions(data.payload.options);
+          }
           setQuestionKind(data.payload.kind);
           
           localStorage.setItem('currentSessionId', currentSessionId);
@@ -59,7 +65,7 @@ const SessionQuestion = () => {
   };
 
   const SaveAndNext = async () => {
-    if (!checkSelected) {
+    if (questionKind === 'MCQ' && !checkSelected) {
       setErrorMessage('Please select an answer before proceeding.');
       return;
     }
@@ -74,10 +80,11 @@ const SessionQuestion = () => {
     const token = localStorage.getItem('authToken');
 
     const payload = {
-      previousQuestionId: selectedId,
-      previousPromptAnswerText,
-      previousMCQAnswerOption: selectedMcqOption.text,
-      previousMCQAnswerText: currentQuestion
+      previousQuestionId: currentQuestionNumericId,
+      previousMCQAnswerOption: selectedMcqOption.label,
+      previousMCQAnswerText: selectedMcqOption.text,
+      previousMCQAnswerText: currentQuestion,
+      previousPromptAnswerText: previousPromptAnswerText,
     };
 
     setCheckSelected(false);
@@ -93,12 +100,18 @@ const SessionQuestion = () => {
       });
 
       if (response.ok) {
+        setErrorMessage('');
         const data = await response.json();
         setCurrentQuestion(data.payload.text);
-        setOptions(data.payload.options);
+        setCurrentQuestionNumericId(data.payload.numericId);
+        if (data.payload.options) {
+          // sort the options using data.payload.options.label
+          data.payload.options.sort((a, b) => a.label.localeCompare(b.label))
+          setOptions(data.payload.options);
+        }
         setQuestionKind(data.payload.kind);
         setPreviousPromptAnswerText("");
-        setSelectedId(null); 
+        setSelectedId(null);
         setSelectedMcqOption("");
       } else {
         const errorData = await response.json();
@@ -123,57 +136,78 @@ const SessionQuestion = () => {
                 {currentQuestion}
               </p>
               <p className="text-lg font-semibold text-center">
-                {questionKind === "MCQ" ? "Select only one option" : "Please provide your answer"}
+                {
+                  (() => {
+                    if (questionKind === "MCQ") {
+                      return ("Select only one option")
+                    } else if (questionKind === "PROMPT") {
+                      return ("Please provide your answer in the input below.")
+                    }
+                  })()
+                }
               </p>
 
               {errorMessage && 
               <p className="text-red-600 text-center text-base font-semibold mt-2">{errorMessage}</p>}
-              {questionKind === "MCQ" ? (
-                <ul className="flex flex-col gap-3 mt-8">
-                  {options.map((option, index) => (
-                    <div 
-                      key={index} 
-                      className={`bg-white w-auto py-3 px-3 rounded-md flex items-center cursor-pointer shadow-md ${selectedId === index ? 'border-2 border-blue-500' : ''}`}
-                      onClick={() => handleSelectedAnswer(index, option)}>
+              {
+                (() => {
+                  if (questionKind === "MCQ") {
+                    return (
+                      <ul className="flex flex-col gap-3 mt-8">
+                      {options.map((option, index) => (
                       <div 
-                        className="w-5 h-5 rounded-full border-2 border-blue-500 flex justify-center items-center">
-                        {selectedId === index && <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-white"></div>}
+                        key={index} 
+                        className={`bg-white w-auto py-3 px-3 rounded-md flex items-center cursor-pointer shadow-md ${selectedId === index ? 'border-2 border-blue-500' : ''}`}
+                        onClick={() => handleSelectedAnswer(index, option)}>
+                        <div 
+                          className="w-5 h-5 rounded-full border-2 border-blue-500 flex justify-center items-center">
+                          {selectedId === index && <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-white"></div>}
+                        </div>
+                        <p className="ml-5">{option.label}: {option.text}</p>
                       </div>
-                      <p className="ml-5">{option.text}</p>
+                      ))}
+                      </ul>
+                    )
+                  } else if (questionKind === 'PROMPT') {
+                    return (
+                      <textarea
+                        rows={5}
+                        cols={30}
+                        value={previousPromptAnswerText}
+                        onChange={(e) => setPreviousPromptAnswerText(e.target.value)}
+                        className="mt-4 p-2 border border-gray-300 rounded-md w-full"
+                      />
+                    )}
+                  })()
+              }
+
+              {
+                (() => {
+                  if (questionKind !== "CONCLUSION") {
+                    <div className="flex justify-between items-center mt-4">
+                      <div className="flex flex-col items-center gap-y-2 text-gray-400">
+                        <button 
+                          className="text-3xl font-bold bg-indigo-100 rounded-full w-[36px] h-[36px]"
+                          type="button"
+                        >
+                        &larr;
+                      </button>
+                      <p>Previous</p>
                     </div>
-                  ))}
-                </ul>
-              ) : (
-                <textarea
-                  rows={5}
-                  cols={30}
-                  value={previousPromptAnswerText}
-                  onChange={(e) => setPreviousPromptAnswerText(e.target.value)}
-                  className="mt-4 p-2 border border-gray-300 rounded-md w-full"
-                />
-              )}
 
-              <div className="flex justify-between items-center mt-4">
-                <div className="flex flex-col items-center gap-y-2 text-gray-400">
-                  <button 
-                    className="text-3xl font-bold bg-indigo-100 rounded-full w-[36px] h-[36px]"
-                    type="button"
-                  >
-                    &larr;
-                  </button>
-                  <p>Previous</p>
-                </div>
-
-                <div className="flex flex-col items-center gap-y-2 text-blue-500">
-                  <button 
-                    className="text-3xl font-bold bg-indigo-100 rounded-full w-[36px] h-[36px]"
-                    type="button"
-                    onClick={SaveAndNext}>
-                    &rarr;
-                  </button>
-                  <p className="text-base">Next</p>
-                </div>
-              </div>
+                      <div className="flex flex-col items-center gap-y-2 text-blue-500">
+                        <button 
+                          className="text-3xl font-bold bg-indigo-100 rounded-full w-[36px] h-[36px]"
+                          type="button"
+                          onClick={SaveAndNext}>
+                          &rarr;
+                        </button>
+                        <p className="text-base">Next</p>
+                      </div>
+                    </div>
+                  }
+                })()
+            }
             </>
           )}
         </div>
