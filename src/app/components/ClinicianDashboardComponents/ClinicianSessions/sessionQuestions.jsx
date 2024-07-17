@@ -184,6 +184,7 @@ const SessionQuestion = () => {
               {
                 (() => {
                   if (questionKind !== "CONCLUSION") {
+                    return (
                     <div className="flex justify-between items-center mt-4">
                       <div className="flex flex-col items-center gap-y-2 text-gray-400">
                         <button 
@@ -205,6 +206,7 @@ const SessionQuestion = () => {
                         <p className="text-base">Next</p>
                       </div>
                     </div>
+                    )
                   }
                 })()
             }
