@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FiInfo } from "react-icons/fi";
+import { FiCheck, FiInfo } from "react-icons/fi";
 import { format } from "date-fns";
 
 const ClinicianSessionsList = ({ img, altTitle, type,  sessionDate, patientName, status, onClick}) => {
@@ -50,28 +50,34 @@ const ClinicianSessionsList = ({ img, altTitle, type,  sessionDate, patientName,
 
             <div>
                 {
-                    status === "PENDING" ? 
-                    (
-                        <div className="flex items-center">
-                            <div className="text-[#b7af00]">
-
-                            <FiInfo size={20}/>
-                            </div>
-                            <p className="text-base font-seminbold ml-2">Awaiting patient&apos;s response</p>
-                        </div>
-
-                    ) : 
-                    (
-                <button 
-                       onClick={onClick}
-                        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
-                        type="submit"
-                    >
-                        Continue Session
-                    </button>
-
-                    )
-                }
+                    (() => {
+                        if (status === "PENDING") {
+                            return (
+                                <div className="flex items-center">
+                                    <div className="text-[#b7af00]"><FiInfo size={20}/></div>
+                                    <p className="text-base font-seminbold ml-2">Awaiting patient&apos;s response</p>
+                                </div>
+                            )
+                        } else if (status === "PATIENT_RESPONDED" || status === "CLINICIAN_IN_PROGRESS") {
+                            return (
+                                <button
+                                    onClick={onClick}
+                                    className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+                                    type="submit"
+                                >
+                                Continue Session
+                                </button>
+                            )
+                        } else if (status === "CLINICIAN_COMPLETED") {
+                            return (
+                                <div className="flex items-center">
+                                    <div className="text-[#62a03f]"><FiCheck size={20}/></div>
+                                    <p className="text-base font-seminbold ml-2">Completed</p>
+                                </div>
+                            )
+                        }
+                })()
+            }
             </div>
         </div>
     );
