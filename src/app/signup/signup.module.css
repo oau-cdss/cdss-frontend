@@ -113,6 +113,7 @@ right: -550px;
     color: #ffff;
     font-size: 18px;
     font-weight: 500;
+    width: 400px;
     /*sf display pro*/
 
     @media screen and (max-width: 768px) {

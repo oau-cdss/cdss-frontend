@@ -17,8 +17,8 @@ export default function RootLayout({ children }) {
      
       <SessionProvider>
 
-      <div className="container">
-        <div className="wrapper">
+      <div className="">
+        <div className="">
         {children}
       
         </div>

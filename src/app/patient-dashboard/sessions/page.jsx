@@ -51,7 +51,7 @@ function Patient() {
 
       if (response.status === 200) {
         const { data } = response;
-        setQuestions(data); // Assuming the response contains questions data
+        setQuestions(data); 
       } else {
         console.error("Failed to fetch data");
       }
@@ -87,7 +87,7 @@ function Patient() {
         <div className="flex w-full gap-4 p-8">
           <div className="w-full border shadow-md bg-[#F9F9F9] p-8 rounded-lg">
             <h3 className="text-xl font-semibold text-[#03021B4D] pb-4">Choose a session</h3>
-            {loading ? ( // Display loading state if data is being fetched
+            {loading ? ( 
           <p className="text-center text-gray-500">Loading...</p>
         ) : (
             <div className="grid lg:grid-cols-3 xl:grid-cols-3 gap-8">
