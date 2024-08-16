@@ -36,6 +36,7 @@ const SignUp = () => {
                 });
                 if (response.status === 200) {
                     const data = await response.json();
+                    setMrssage("Registration Successful")
 
                     if (typeof window !== 'undefined') {
                         localStorage.setItem('userRole', values.role);
