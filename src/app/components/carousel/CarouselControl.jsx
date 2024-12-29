@@ -5,7 +5,7 @@ import Dots from "./dots";
 
 const CarouselControls = (props) => {
   return (
-    <div className="flex justify-between items-center gap-x-2">
+    <div className="flex justify-center items-center gap-x-2 ">
       
    
       
@@ -24,7 +24,10 @@ const CarouselControls = (props) => {
       >
         &larr;
       </button>
+      <div className="h-0">
+
        <Dots itemsLength={props.itemsLength} selectedIndex={props.selectedIndex} gap="gap-x-2" width="w-40" minWidth="w-12"/>
+      </div>
       <button
         onClick={() => {
           if (props.canScrollNext) {

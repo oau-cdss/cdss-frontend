@@ -1,8 +1,12 @@
 
+import Image from "next/image";
 import Carousel from "./carousel";
 const CarouselHome = () => {
   const data = [
-   "1", "3", "2", "4"
+   "/carousel-1.png",
+   "/carousel-2.jpeg",
+   "/carousel-1.png",
+   "/carousel-2.jpeg"
   ];
   return (
     <div className="lg:w-3/4 mx-auto my-2">
@@ -15,9 +19,17 @@ const CarouselHome = () => {
             // flex[0_0_100%]
             //   - shorthand for flex-grow:0; flex-shrink:0; flex-basis:100%
             //   - we want this slide to not be able to grow or shrink and take up 100% width of the viewport.
-            <div className="relative h-64 flex-[0_0_100%]" key={i}>
+            <div className="relative h-full flex-[0_0_100%]" key={i}>
               {/* use object-cover + fill since we don't know the height and width of the parent */}
-              {src}
+              <Image
+
+    src={src}
+    alt={src}
+    width={865}
+    height={540}
+    objectFit="cover"
+    className="w-full h-full"
+  />
             </div>
           );
         })}

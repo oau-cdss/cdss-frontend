@@ -9,7 +9,7 @@ const Dots = ({ itemsLength, selectedIndex, gap, width, minWidth }) => {
         return (
           <div
             className={classNames({
-              [`h-0.5 ${minWidth} lg:${width} rounded-sm transition-all duration-300 bg-indigo-400`]: true,
+              [`h-1 ${minWidth} lg:${width} rounded-sm transition-all duration-300 bg-indigo-400`]: true,
               // tune down the opacity if slide is not selected
               "opacity-50": !selected,
             })}

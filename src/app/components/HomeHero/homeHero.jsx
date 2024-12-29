@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const HomeHero = () => {
     return (
-        <div className="lg:grid grid-cols-2 grid-rows-1 gap-x-8 lg:pb-16 mb-6 lg:mb-0">
+        <div className="lg:grid grid-cols-2 grid-rows-1 gap-x-8 lg:pb-16 mb-6 lg:mb-0 bg-[#f9f9f9]">
             <div className=" hidden  lg:flex flex-col mt-[130px] ml-[80px] ">
                 <p className="text-[#1E59CF] max-w-[650px] h-[192px] font-como font-medium lg:text-4xl leading-[95px]">
                     Revolutionize Movement:<br />Your Path to Musculoskeletal Wellness Begins!
